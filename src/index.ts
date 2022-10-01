@@ -1,5 +1,7 @@
-import { Application, Sprite, settings, SCALE_MODES } from "pixi.js";
+import { Application, settings, SCALE_MODES } from "pixi.js";
 import board from "./elements/Board";
+import GameObject from "./elements/GameObject";
+import mcData from "./characters/Lyn/on_map.json";
 
 // Pixel rendering settings
 settings.SCALE_MODE = SCALE_MODES.NEAREST;
@@ -14,10 +16,15 @@ const app = new Application({
   height: gameContainer?.clientHeight,
 });
 
-const mainCharacter: Sprite = Sprite.from("img/Characters/Lyn/idle/00.png");
-mainCharacter.anchor.set(0.5);
-mainCharacter.x = app.screen.width / 2;
-mainCharacter.y = app.screen.height / 2;
+// Load characters
+const lyn = new GameObject({
+  x: app.screen.width / 2,
+  y: app.screen.height / 2,
+  spriteData: mcData,
+  animationSpeed: 0.05,
+});
+console.log(lyn);
 
 app.stage.addChild(board);
-app.stage.addChild(mainCharacter);
+app.stage.addChild(lyn.sprite.currentAnimation());
+lyn.sprite.currentAnimation().play();
