@@ -22,7 +22,10 @@ class GameObject {
     return this.internalSprite.animation;
   }
 
-  update() {}
+  update(config?: object) {
+    if (config) {
+    }
+  }
 
   protected changeAnimation(animation: string) {
     return this.internalSprite.changeAnimation(animation);
@@ -49,23 +52,6 @@ class GameObject {
     if (this.allowedDirections.includes(direction)) {
       this.internalDirection = direction;
     }
-  }
-
-  //   Moving
-  move(destination: { x?: number; y?: number }) {
-    const newX = destination.x || this.x;
-    const newY = destination.y || this.y;
-    if (newX > this.x && this.direction !== "right") {
-      this._changeDirection("right");
-    } else if (newX < this.x && this.direction !== "left") {
-      this._changeDirection("left");
-    }
-    this.internalSprite.move(newX, newY);
-  }
-
-  _changeDirection(direction: string) {
-    this.internalDirection = direction;
-    this.changeAnimation(direction);
   }
 }
 
