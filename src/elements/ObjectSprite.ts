@@ -52,9 +52,6 @@ class ObjectSprite {
   set x(xDest: number) {
     this.internalAnimation.x = xDest;
   }
-  changeX(xDiff: number) {
-    this.internalAnimation.x += xDiff;
-  }
 
   get y() {
     return this.internalAnimation.y;
@@ -62,10 +59,6 @@ class ObjectSprite {
 
   set y(yDest: number) {
     this.internalAnimation.y = yDest;
-  }
-
-  changeY(yDiff: number) {
-    this.internalAnimation.y += yDiff;
   }
 
   get position() {
@@ -78,7 +71,10 @@ class ObjectSprite {
   }
 
   changeAnimation(animation: string) {
-    if (Object.keys(this.textures).includes(animation)) {
+    if (
+      animation !== this.internalCurrentAnimation &&
+      Object.keys(this.textures).includes(animation)
+    ) {
       this.internalCurrentAnimation = animation;
       this._updateAnimation();
       return true;

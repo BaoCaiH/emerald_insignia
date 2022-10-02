@@ -2,8 +2,9 @@ import { ISpritesheetData, IPointData } from "pixi.js";
 import GameObject from "./GameObject";
 
 class Characters extends GameObject {
-  tweenRemaining: number;
+  protected tweenRemaining: number;
   tweeningInstruction: Record<string, [string, number]>;
+  protected moveSpeed: number;
   constructor(config: {
     x: number;
     y: number;
@@ -11,30 +12,54 @@ class Characters extends GameObject {
     anchorOverwrite?: Record<string, IPointData> | undefined;
     currentAnimation?: string | undefined;
     animationSpeed?: number | undefined;
+    moveSpeed?: number | undefined;
   }) {
     super(config);
-    this.tweenRemaining = 48;
+    this.moveSpeed = config.moveSpeed || 1;
+    this.tweenRemaining = 0;
     this.tweeningInstruction = {
-      left: ["x", -1],
-      right: ["x", 1],
-      up: ["y", -1],
-      down: ["y", 1],
+      left: ["x", -this.moveSpeed],
+      right: ["x", this.moveSpeed],
+      up: ["y", -this.moveSpeed],
+      down: ["y", this.moveSpeed],
     };
   }
 
-  override update() {
+  override update(config?: { arrow: string }) {
     this.tweening();
+
+    if (this.tweenRemaining === 0) {
+      if (config?.arrow) {
+        this.startTweening(config.arrow);
+      } else {
+        this.changeDirection("idle");
+      }
+    }
+  }
+
+  private startTweening(arrow: string) {
+    if (this.direction !== arrow) {
+      this.changeDirection(arrow);
+    }
+    this.tweenRemaining = 16;
+  }
+
+  private changeDirection(arrow: string) {
+    if (this.direction !== arrow) {
+      this.direction = arrow;
+      this.changeAnimation(arrow);
+    }
   }
 
   private tweening() {
     if (this.tweenRemaining > 0 && this.direction !== "idle") {
       const [axis, instruction] = this.tweeningInstruction[this.direction];
       if (axis === "x") {
-        this.internalSprite.changeX(instruction);
+        this.internalSprite.x += instruction;
       } else if (axis === "y") {
-        this.internalSprite.changeY(instruction);
+        this.internalSprite.y += instruction;
       }
-      this.tweenRemaining += instruction;
+      this.tweenRemaining -= this.moveSpeed;
     }
   }
 }
