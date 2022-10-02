@@ -76,22 +76,15 @@ class ObjectSprite {
       Object.keys(this.textures).includes(animation)
     ) {
       this.internalCurrentAnimation = animation;
-      this._updateAnimation();
-      return true;
+      this.updateAnimation();
     }
-    return false;
   }
 
-  _updateAnimation() {
+  private updateAnimation() {
     this.internalAnimation.stop();
     this.internalAnimation.textures =
       this.textures[this.internalCurrentAnimation];
     this.internalAnimation.play();
-  }
-
-  move(x: number, y: number) {
-    this.internalAnimation.x = x;
-    this.internalAnimation.y = y;
   }
 }
 
