@@ -1,6 +1,6 @@
 import { Application, settings, SCALE_MODES } from "pixi.js";
 import board from "./elements/Board";
-import GameObject from "./elements/GameObject";
+import Character from "./elements/Character";
 import mcData from "./characters/Lyn/on_map.json";
 
 // Pixel rendering settings
@@ -17,14 +17,33 @@ const app = new Application({
 });
 
 // Load characters
-const lyn = new GameObject({
+const lyn = new Character({
   x: app.screen.width / 2,
   y: app.screen.height / 2,
   spriteData: mcData,
   animationSpeed: 0.05,
+  currentAnimation: "left",
 });
 console.log(lyn);
 
 app.stage.addChild(board);
-app.stage.addChild(lyn.sprite.currentAnimation());
-lyn.sprite.currentAnimation().play();
+app.stage.addChild(lyn.animation);
+// lyn.sprite.currentAnimation().play();
+
+// Add a ticker callback to move the sprite back and forth
+// let elapsed = 0.0;
+app.ticker.add(() => {
+  // elapsed += delta;
+  // console.log(elapsed);
+
+  // lyn.sprite().update(delta);
+
+  // // console.log(lyn.sprite.currentAnimation().autoUpdate);
+  // const newX = 1 * (120.0 + Math.cos(elapsed / 50.0) * 100.0);
+  // // const currentX = lyn.x
+  // // if (newX > currentX) {
+  // //   lyn.changeAnimation("right")
+  // // }
+  // lyn.move({ x: newX });
+  lyn.update();
+});
