@@ -1,8 +1,6 @@
 class Input {
-  map: Record<string, string>;
-  heldDirection: string[];
+  protected map: Record<string, any>;
   constructor() {
-    this.heldDirection = [];
     this.map = {};
   }
 

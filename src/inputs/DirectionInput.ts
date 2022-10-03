@@ -1,8 +1,10 @@
 import Input from "./Input";
 
 class DirectionInput extends Input {
+  private heldDirection: string[];
   constructor() {
     super();
+    this.heldDirection = [];
     this.map = {
       ArrowLeft: "left",
       ArrowRight: "right",

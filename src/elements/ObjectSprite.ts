@@ -1,7 +1,6 @@
 import {
   AnimatedSprite,
   BaseTexture,
-  IPointData,
   ISpritesheetData,
   Spritesheet,
 } from "pixi.js";
@@ -9,12 +8,11 @@ import {
 class ObjectSprite {
   spriteData: any;
   spritesheet: Spritesheet;
-  anchorOverwrite?: Record<string, IPointData>;
   textures;
   private internalCurrentAnimation: string;
   private internalAnimation: AnimatedSprite;
   constructor(config: {
-    anchorOverwrite?: Record<string, IPointData>;
+    anchorOverwrite?: Record<string, number>;
     currentAnimation?: string;
     spriteData: ISpritesheetData;
     animationSpeed?: number;
@@ -27,7 +25,6 @@ class ObjectSprite {
       BaseTexture.from(this.spriteData.meta.image),
       this.spriteData
     );
-    this.anchorOverwrite = config.anchorOverwrite;
     this.internalCurrentAnimation = config.currentAnimation || "idle";
 
     // Setup animations
@@ -35,6 +32,10 @@ class ObjectSprite {
     this.textures = this.spritesheet.animations;
     this.internalAnimation = new AnimatedSprite(
       this.textures[this.internalCurrentAnimation]
+    );
+    this.internalAnimation.anchor.set(
+      config.anchorOverwrite?.x,
+      config.anchorOverwrite?.y
     );
     this.position = [config.x, config.y];
     this.internalAnimation.animationSpeed = config.animationSpeed || 1;
