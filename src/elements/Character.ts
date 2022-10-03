@@ -1,4 +1,4 @@
-import { ISpritesheetData, IPointData } from "pixi.js";
+import { ISpritesheetData } from "pixi.js";
 import GameObject from "./GameObject";
 
 class Characters extends GameObject {
@@ -9,7 +9,7 @@ class Characters extends GameObject {
     x: number;
     y: number;
     spriteData: ISpritesheetData;
-    anchorOverwrite?: Record<string, IPointData> | undefined;
+    anchorOverwrite?: Record<string, number> | undefined;
     currentAnimation?: string | undefined;
     animationSpeed?: number | undefined;
     moveSpeed?: number | undefined;

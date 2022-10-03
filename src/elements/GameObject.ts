@@ -1,20 +1,23 @@
-import { IPointData, ISpritesheetData } from "pixi.js";
+import { ISpritesheetData } from "pixi.js";
 import ObjectSprite from "./ObjectSprite";
 
 class GameObject {
   protected internalDirection: string;
   protected allowedDirections: string[];
   protected internalSprite: ObjectSprite;
+  isFocus: boolean;
   constructor(config: {
     x: number;
     y: number;
     spriteData: ISpritesheetData;
-    anchorOverwrite?: Record<string, IPointData>;
+    anchorOverwrite?: Record<string, number>;
     currentAnimation?: string;
     animationSpeed?: number;
+    isFocused?: boolean;
   }) {
     this.internalDirection = config.currentAnimation || "idle";
     this.allowedDirections = ["idle", "left", "right", "up", "down"];
+    this.isFocus = config.isFocused || false;
     this.internalSprite = new ObjectSprite(config);
   }
 
