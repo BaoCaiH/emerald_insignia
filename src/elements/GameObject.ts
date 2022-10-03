@@ -1,21 +1,70 @@
-import { IPointData, ISpritesheetData } from "pixi.js";
+import { ISpritesheetData } from "pixi.js";
 import ObjectSprite from "./ObjectSprite";
 
 class GameObject {
-  x: number;
-  y: number;
-  sprite: ObjectSprite;
+  internalName: string;
+  protected internalDirection: string;
+  protected allowedDirections: string[];
+  protected internalSprite: ObjectSprite;
+  protected internalIsFocus: boolean;
   constructor(config: {
+    name?: string;
     x: number;
     y: number;
     spriteData: ISpritesheetData;
-    anchorOverwrite?: Record<string, IPointData>;
+    anchorOverwrite?: Record<string, number>;
     currentAnimation?: string;
     animationSpeed?: number;
   }) {
-    this.x = config.x || 0;
-    this.y = config.y || 0;
-    this.sprite = new ObjectSprite(config);
+    this.internalName = config.name || "unknown";
+    this.internalDirection = config.currentAnimation || "idle";
+    this.allowedDirections = ["idle", "focus", "left", "right", "up", "down"];
+    this.internalIsFocus = false;
+    this.internalSprite = new ObjectSprite(config);
+  }
+
+  get animation() {
+    return this.internalSprite.animation;
+  }
+
+  update(config?: object) {
+    if (config) {
+    }
+  }
+
+  protected changeAnimation(animation: string) {
+    return this.internalSprite.changeAnimation(animation);
+  }
+
+  get isFocus() {
+    return this.internalIsFocus;
+  }
+
+  set focus(flag: boolean) {
+    this.internalIsFocus = flag;
+  }
+
+  get x() {
+    return this.internalSprite.x;
+  }
+  set x(xDest: number) {
+    this.internalSprite.x = xDest;
+  }
+  get y() {
+    return this.internalSprite.y;
+  }
+  set y(yDest: number) {
+    this.internalSprite.y = yDest;
+  }
+
+  get direction() {
+    return this.internalDirection;
+  }
+
+  protected set direction(direction: string) {
+    if (this.allowedDirections.includes(direction)) {
+      this.internalDirection = direction;
+    }
   }
 }
 

@@ -1,0 +1,199 @@
+{
+  "frames": {
+    "hector_down_00.png": {
+      "frame": { "x": 0, "y": 0, "w": 28, "h": 18 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 28, "h": 18 },
+      "sourceSize": { "w": 28, "h": 18 }
+    },
+    "hector_down_01.png": {
+      "frame": { "x": 28, "y": 0, "w": 28, "h": 18 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 28, "h": 18 },
+      "sourceSize": { "w": 28, "h": 18 }
+    },
+    "hector_down_02.png": {
+      "frame": { "x": 56, "y": 0, "w": 28, "h": 18 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 28, "h": 18 },
+      "sourceSize": { "w": 28, "h": 18 }
+    },
+    "hector_down_03.png": {
+      "frame": { "x": 84, "y": 0, "w": 28, "h": 18 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 28, "h": 18 },
+      "sourceSize": { "w": 28, "h": 18 }
+    },
+    "hector_focus_00.png": {
+      "frame": { "x": 0, "y": 18, "w": 24, "h": 22 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 24, "h": 22 },
+      "sourceSize": { "w": 24, "h": 22 }
+    },
+    "hector_focus_01.png": {
+      "frame": { "x": 24, "y": 18, "w": 18, "h": 38 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 18, "h": 38 },
+      "sourceSize": { "w": 18, "h": 38 }
+    },
+    "hector_focus_02.png": {
+      "frame": { "x": 42, "y": 18, "w": 18, "h": 38 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 18, "h": 38 },
+      "sourceSize": { "w": 18, "h": 38 }
+    },
+    "hector_idle_00.png": {
+      "frame": { "x": 60, "y": 18, "w": 16, "h": 16 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+      "sourceSize": { "w": 16, "h": 16 }
+    },
+    "hector_idle_01.png": {
+      "frame": { "x": 76, "y": 18, "w": 26, "h": 26 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 26, "h": 26 },
+      "sourceSize": { "w": 26, "h": 26 }
+    },
+    "hector_idle_02.png": {
+      "frame": { "x": 102, "y": 18, "w": 26, "h": 26 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 26, "h": 26 },
+      "sourceSize": { "w": 26, "h": 26 }
+    },
+    "hector_left_00.png": {
+      "frame": { "x": 0, "y": 56, "w": 32, "h": 18 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 18 },
+      "sourceSize": { "w": 32, "h": 18 }
+    },
+    "hector_left_01.png": {
+      "frame": { "x": 32, "y": 56, "w": 30, "h": 18 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 30, "h": 18 },
+      "sourceSize": { "w": 30, "h": 18 }
+    },
+    "hector_left_02.png": {
+      "frame": { "x": 62, "y": 56, "w": 30, "h": 18 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 30, "h": 18 },
+      "sourceSize": { "w": 30, "h": 18 }
+    },
+    "hector_left_03.png": {
+      "frame": { "x": 92, "y": 56, "w": 30, "h": 18 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 30, "h": 18 },
+      "sourceSize": { "w": 30, "h": 18 }
+    },
+    "hector_right_00.png": {
+      "frame": { "x": 0, "y": 74, "w": 32, "h": 18 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 18 },
+      "sourceSize": { "w": 32, "h": 18 }
+    },
+    "hector_right_01.png": {
+      "frame": { "x": 32, "y": 74, "w": 32, "h": 18 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 18 },
+      "sourceSize": { "w": 32, "h": 18 }
+    },
+    "hector_right_02.png": {
+      "frame": { "x": 64, "y": 74, "w": 32, "h": 18 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 18 },
+      "sourceSize": { "w": 32, "h": 18 }
+    },
+    "hector_right_03.png": {
+      "frame": { "x": 96, "y": 74, "w": 32, "h": 18 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 18 },
+      "sourceSize": { "w": 32, "h": 18 }
+    },
+    "hector_up_00.png": {
+      "frame": { "x": 0, "y": 92, "w": 30, "h": 18 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 30, "h": 18 },
+      "sourceSize": { "w": 30, "h": 18 }
+    },
+    "hector_up_01.png": {
+      "frame": { "x": 30, "y": 92, "w": 30, "h": 18 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 30, "h": 18 },
+      "sourceSize": { "w": 30, "h": 18 }
+    },
+    "hector_up_02.png": {
+      "frame": { "x": 60, "y": 92, "w": 30, "h": 18 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 30, "h": 18 },
+      "sourceSize": { "w": 30, "h": 18 }
+    },
+    "hector_up_03.png": {
+      "frame": { "x": 90, "y": 92, "w": 30, "h": 18 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 30, "h": 18 },
+      "sourceSize": { "w": 30, "h": 18 }
+    }
+  },
+  "animations": {
+    "down": [
+      "hector_down_00.png",
+      "hector_down_01.png",
+      "hector_down_02.png",
+      "hector_down_03.png"
+    ],
+    "focus": [
+      "hector_focus_00.png",
+      "hector_focus_01.png",
+      "hector_focus_02.png"
+    ],
+    "idle": ["hector_idle_00.png", "hector_idle_01.png", "hector_idle_02.png"],
+    "left": [
+      "hector_left_00.png",
+      "hector_left_01.png",
+      "hector_left_02.png",
+      "hector_left_03.png"
+    ],
+    "right": [
+      "hector_right_00.png",
+      "hector_right_01.png",
+      "hector_right_02.png",
+      "hector_right_03.png"
+    ],
+    "up": [
+      "hector_up_00.png",
+      "hector_up_01.png",
+      "hector_up_02.png",
+      "hector_up_03.png"
+    ]
+  },
+  "meta": {
+    "app": "https://www.codeandweb.com/texturepacker",
+    "version": "1.0",
+    "image": "img/Characters/Hector/onMap.png",
+    "format": "RGBA8888",
+    "size": { "w": 128, "h": 110 },
+    "scale": "1",
+    "smartupdate": "$TexturePacker:SmartUpdate:d33b831dcbaa71a0e37af48ae4072d18:c94af436c2061d5140bbac185b0f04d2:51ceb6d87f12112d2a44af87d1e8b9a3$"
+  }
+}
