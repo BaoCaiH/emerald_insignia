@@ -21,10 +21,10 @@ const app = new Application({
 
 const input = new DirectionInput();
 const charSelection = new CharacterSelectionInput();
-charSelection.init();
 
 // Load characters
 const lyn = new Character({
+  name: "Lyn",
   x: app.screen.width / 2,
   y: app.screen.height / 2,
   spriteData: dataLyn,
@@ -34,6 +34,7 @@ const lyn = new Character({
 });
 
 const hector = new Character({
+  name: "Hector",
   x: app.screen.width / 2 + 16,
   y: app.screen.height / 2 + 32,
   spriteData: dataHector,
@@ -42,6 +43,8 @@ const hector = new Character({
   moveSpeed: 1,
 });
 
+const characters = [lyn, hector];
+charSelection.characterList = characters;
 app.stage.addChild(board);
 app.stage.addChild(lyn.animation);
 app.stage.addChild(hector.animation);
@@ -50,7 +53,6 @@ app.stage.addChild(hector.animation);
 // let elapsed = 0.0;
 app.ticker.add(() => {
   // console.log(charSelection.selected);
-
   lyn.update({ arrow: input.direction });
   hector.update({ arrow: input.direction });
 });

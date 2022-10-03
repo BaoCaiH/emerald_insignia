@@ -2,22 +2,24 @@ import { ISpritesheetData } from "pixi.js";
 import ObjectSprite from "./ObjectSprite";
 
 class GameObject {
+  internalName: string;
   protected internalDirection: string;
   protected allowedDirections: string[];
   protected internalSprite: ObjectSprite;
-  isFocus: boolean;
+  protected internalIsFocus: boolean;
   constructor(config: {
+    name?: string;
     x: number;
     y: number;
     spriteData: ISpritesheetData;
     anchorOverwrite?: Record<string, number>;
     currentAnimation?: string;
     animationSpeed?: number;
-    isFocused?: boolean;
   }) {
+    this.internalName = config.name || "unknown";
     this.internalDirection = config.currentAnimation || "idle";
-    this.allowedDirections = ["idle", "left", "right", "up", "down"];
-    this.isFocus = config.isFocused || false;
+    this.allowedDirections = ["idle", "focus", "left", "right", "up", "down"];
+    this.internalIsFocus = false;
     this.internalSprite = new ObjectSprite(config);
   }
 
@@ -32,6 +34,14 @@ class GameObject {
 
   protected changeAnimation(animation: string) {
     return this.internalSprite.changeAnimation(animation);
+  }
+
+  get isFocus() {
+    return this.internalIsFocus;
+  }
+
+  set focus(flag: boolean) {
+    this.internalIsFocus = flag;
   }
 
   get x() {
