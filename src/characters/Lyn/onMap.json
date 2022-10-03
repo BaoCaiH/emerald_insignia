@@ -1,0 +1,190 @@
+{
+  "frames": {
+    "lyn_down_00.png": {
+      "frame": { "x": 72, "y": 16, "w": 24, "h": 18 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 24, "h": 18 },
+      "sourceSize": { "w": 24, "h": 18 }
+    },
+    "lyn_down_01.png": {
+      "frame": { "x": 96, "y": 16, "w": 24, "h": 20 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 24, "h": 20 },
+      "sourceSize": { "w": 24, "h": 20 }
+    },
+    "lyn_down_02.png": {
+      "frame": { "x": 120, "y": 16, "w": 24, "h": 20 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 24, "h": 20 },
+      "sourceSize": { "w": 24, "h": 20 }
+    },
+    "lyn_down_03.png": {
+      "frame": { "x": 144, "y": 16, "w": 24, "h": 20 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 24, "h": 20 },
+      "sourceSize": { "w": 24, "h": 20 }
+    },
+    "lyn_focus_00.png": {
+      "frame": { "x": 168, "y": 16, "w": 16, "h": 20 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 20 },
+      "sourceSize": { "w": 16, "h": 20 }
+    },
+    "lyn_focus_01.png": {
+      "frame": { "x": 184, "y": 16, "w": 16, "h": 20 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 20 },
+      "sourceSize": { "w": 16, "h": 20 }
+    },
+    "lyn_focus_02.png": {
+      "frame": { "x": 200, "y": 16, "w": 16, "h": 20 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 20 },
+      "sourceSize": { "w": 16, "h": 20 }
+    },
+    "lyn_idle_00.png": {
+      "frame": { "x": 0, "y": 0, "w": 16, "h": 16 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+      "sourceSize": { "w": 16, "h": 16 }
+    },
+    "lyn_idle_01.png": {
+      "frame": { "x": 16, "y": 0, "w": 16, "h": 16 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+      "sourceSize": { "w": 16, "h": 16 }
+    },
+    "lyn_idle_02.png": {
+      "frame": { "x": 32, "y": 0, "w": 16, "h": 16 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+      "sourceSize": { "w": 16, "h": 16 }
+    },
+    "lyn_left_00.png": {
+      "frame": { "x": 48, "y": 0, "w": 22, "h": 16 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 22, "h": 16 },
+      "sourceSize": { "w": 22, "h": 16 }
+    },
+    "lyn_left_01.png": {
+      "frame": { "x": 70, "y": 0, "w": 22, "h": 16 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 22, "h": 16 },
+      "sourceSize": { "w": 22, "h": 16 }
+    },
+    "lyn_left_02.png": {
+      "frame": { "x": 92, "y": 0, "w": 22, "h": 16 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 22, "h": 16 },
+      "sourceSize": { "w": 22, "h": 16 }
+    },
+    "lyn_left_03.png": {
+      "frame": { "x": 114, "y": 0, "w": 22, "h": 16 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 22, "h": 16 },
+      "sourceSize": { "w": 22, "h": 16 }
+    },
+    "lyn_right_00.png": {
+      "frame": { "x": 136, "y": 0, "w": 22, "h": 16 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 22, "h": 16 },
+      "sourceSize": { "w": 22, "h": 16 }
+    },
+    "lyn_right_01.png": {
+      "frame": { "x": 158, "y": 0, "w": 22, "h": 16 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 22, "h": 16 },
+      "sourceSize": { "w": 22, "h": 16 }
+    },
+    "lyn_right_02.png": {
+      "frame": { "x": 180, "y": 0, "w": 22, "h": 16 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 22, "h": 16 },
+      "sourceSize": { "w": 22, "h": 16 }
+    },
+    "lyn_right_03.png": {
+      "frame": { "x": 202, "y": 0, "w": 22, "h": 16 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 22, "h": 16 },
+      "sourceSize": { "w": 22, "h": 16 }
+    },
+    "lyn_up_00.png": {
+      "frame": { "x": 0, "y": 16, "w": 18, "h": 16 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 18, "h": 16 },
+      "sourceSize": { "w": 18, "h": 16 }
+    },
+    "lyn_up_01.png": {
+      "frame": { "x": 18, "y": 16, "w": 18, "h": 16 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 18, "h": 16 },
+      "sourceSize": { "w": 18, "h": 16 }
+    },
+    "lyn_up_02.png": {
+      "frame": { "x": 36, "y": 16, "w": 18, "h": 16 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 18, "h": 16 },
+      "sourceSize": { "w": 18, "h": 16 }
+    },
+    "lyn_up_03.png": {
+      "frame": { "x": 54, "y": 16, "w": 18, "h": 16 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 18, "h": 16 },
+      "sourceSize": { "w": 18, "h": 16 }
+    }
+  },
+  "animations": {
+    "down": [
+      "lyn_down_00.png",
+      "lyn_down_01.png",
+      "lyn_down_02.png",
+      "lyn_down_03.png"
+    ],
+    "focus": ["lyn_focus_00.png", "lyn_focus_01.png", "lyn_focus_02.png"],
+    "idle": ["lyn_idle_00.png", "lyn_idle_01.png", "lyn_idle_02.png"],
+    "left": [
+      "lyn_left_00.png",
+      "lyn_left_01.png",
+      "lyn_left_02.png",
+      "lyn_left_03.png"
+    ],
+    "right": [
+      "lyn_right_00.png",
+      "lyn_right_01.png",
+      "lyn_right_02.png",
+      "lyn_right_03.png"
+    ],
+    "up": ["lyn_up_00.png", "lyn_up_01.png", "lyn_up_02.png", "lyn_up_03.png"]
+  },
+  "meta": {
+    "app": "https://www.codeandweb.com/texturepacker",
+    "version": "1.0",
+    "image": "img/Characters/Lyn/onMap.png",
+    "format": "RGBA8888",
+    "size": { "w": 224, "h": 36 },
+    "scale": "1",
+    "smartupdate": "$TexturePacker:SmartUpdate:eb421625b76e1f5129ddb6141d8e317f:659fe6d95a1adc2a8d45a3418377e25d:51ceb6d87f12112d2a44af87d1e8b9a3$"
+  }
+}

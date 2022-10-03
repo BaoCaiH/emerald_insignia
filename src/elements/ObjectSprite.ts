@@ -1,7 +1,6 @@
 import {
   AnimatedSprite,
   BaseTexture,
-  IPointData,
   ISpritesheetData,
   Spritesheet,
 } from "pixi.js";
@@ -9,14 +8,11 @@ import {
 class ObjectSprite {
   spriteData: any;
   spritesheet: Spritesheet;
-  anchorOverwrite?: Record<string, IPointData>;
-  animationSpeed: number;
-  animations: Record<string, AnimatedSprite>;
-  private _currentAnimation: string;
-  x: any;
-  y: any;
+  textures;
+  private internalCurrentAnimation: string;
+  private internalAnimation: AnimatedSprite;
   constructor(config: {
-    anchorOverwrite?: Record<string, IPointData>;
+    anchorOverwrite?: Record<string, number>;
     currentAnimation?: string;
     spriteData: ISpritesheetData;
     animationSpeed?: number;
@@ -24,37 +20,72 @@ class ObjectSprite {
     y: number;
   }) {
     // Init
-    this.x = config.x;
-    this.y = config.y;
     this.spriteData = config.spriteData;
     this.spritesheet = new Spritesheet(
       BaseTexture.from(this.spriteData.meta.image),
       this.spriteData
     );
-    this.anchorOverwrite = config.anchorOverwrite;
-    this.animationSpeed = config.animationSpeed || 1;
-    this._currentAnimation = config.currentAnimation || "idle";
+    this.internalCurrentAnimation = config.currentAnimation || "idle";
+
     // Setup animations
     this.spritesheet.parse();
-    this.animations = this.loadAnimations();
-  }
-
-  loadAnimations() {
-    return Object.entries(this.spritesheet.animations).reduce(
-      (acc: Record<string, AnimatedSprite>, [key, animation]) => {
-        const newAnimation = new AnimatedSprite(animation);
-        newAnimation.animationSpeed = this.animationSpeed;
-        acc[key] = newAnimation;
-        return acc;
-      },
-      {}
+    this.textures = this.spritesheet.animations;
+    this.internalAnimation = new AnimatedSprite(
+      this.textures[this.internalCurrentAnimation]
     );
+    this.internalAnimation.anchor.set(
+      config.anchorOverwrite?.x,
+      config.anchorOverwrite?.y
+    );
+    this.position = [config.x, config.y];
+    this.internalAnimation.animationSpeed = config.animationSpeed || 1;
+    this.internalAnimation.play();
   }
 
-  currentAnimation() {
-    this.animations[this._currentAnimation].x = this.x;
-    this.animations[this._currentAnimation].y = this.y;
-    return this.animations[this._currentAnimation];
+  get animation() {
+    return this.internalAnimation;
+  }
+
+  get x() {
+    return this.internalAnimation.x;
+  }
+
+  set x(xDest: number) {
+    this.internalAnimation.x = xDest;
+  }
+
+  get y() {
+    return this.internalAnimation.y;
+  }
+
+  set y(yDest: number) {
+    this.internalAnimation.y = yDest;
+  }
+
+  get position() {
+    return [this.x, this.y];
+  }
+
+  set position([xDest, yDest]) {
+    this.x = xDest;
+    this.y = yDest;
+  }
+
+  changeAnimation(animation: string) {
+    if (
+      animation !== this.internalCurrentAnimation &&
+      Object.keys(this.textures).includes(animation)
+    ) {
+      this.internalCurrentAnimation = animation;
+      this.updateAnimation();
+    }
+  }
+
+  private updateAnimation() {
+    this.internalAnimation.stop();
+    this.internalAnimation.textures =
+      this.textures[this.internalCurrentAnimation];
+    this.internalAnimation.play();
   }
 }
 
