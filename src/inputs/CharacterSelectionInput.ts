@@ -1,46 +1,38 @@
+import Characters from "../elements/Character";
 import Input from "./Input";
 
 class CharacterSelectionInput extends Input {
-  private inSelectionMode: boolean;
-  protected override map: Record<string, number>;
-  private internalSelected: number | undefined;
+  characters: Characters[] | undefined;
+  characterIndex: number;
   constructor() {
     super();
-    this.map = {
-      Digit1: 0,
-      Digit2: 1,
-      Digit3: 2,
-      Digit4: 3,
-      Digit5: 4,
-      Digit6: 5,
-      Digit7: 6,
-      Digit8: 7,
-      Digit9: 8,
-    };
-    this.inSelectionMode = false;
-    this.internalSelected = undefined;
+    this.characterIndex = -1;
 
-    document.addEventListener("keydown", (key) => {
-      const keyPressed = key.code;
-      if (keyPressed && keyPressed === "KeyC") {
-        this.inSelectionMode = true;
-      }
-    });
     document.addEventListener("keyup", (key) => {
       const keyReleased = key.code;
-      const mappedOutput = this.map[key.code];
-      if (keyReleased && this.inSelectionMode) {
-        if (keyReleased === "KeyC") {
-          this.inSelectionMode = false;
-        } else if (mappedOutput) {
-          this.internalSelected = mappedOutput;
-        }
+
+      if (keyReleased === "KeyC" && this.characters) {
+        this.characterIndex =
+          (this.characterIndex + 1) % this.characters.length;
+        console.log(this.characterIndex);
+        this.setFocus();
       }
     });
   }
 
-  get selected() {
-    return this.internalSelected;
+  setFocus() {
+    this.characters?.forEach((character) => {
+      if (this.characters?.indexOf(character) === this.characterIndex) {
+        console.log(character.internalName);
+
+        character.focus = true;
+      } else {
+        character.focus = false;
+      }
+    });
+  }
+  set characterList(characters: Characters[]) {
+    this.characters = characters;
   }
 }
 

@@ -6,6 +6,7 @@ class Characters extends GameObject {
   tweeningInstruction: Record<string, [string, number]>;
   protected moveSpeed: number;
   constructor(config: {
+    name?: string;
     x: number;
     y: number;
     spriteData: ISpritesheetData;
@@ -29,7 +30,7 @@ class Characters extends GameObject {
     this.tweening();
 
     if (this.tweenRemaining === 0) {
-      if (config?.arrow) {
+      if (config?.arrow && this.isFocus) {
         this.startTweening(config.arrow);
       } else {
         this.changeDirection("idle");
