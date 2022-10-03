@@ -1,58 +1,45 @@
-import { Application, settings, SCALE_MODES } from "pixi.js";
-import board from "./elements/Board";
-import Character from "./elements/Character";
+import { settings, SCALE_MODES } from "pixi.js";
+import Game from "./elements/Game";
 import dataLyn from "./characters/Lyn/onMap.json";
 import dataHector from "./characters/Hector/onMap.json";
-import DirectionInput from "./inputs/DirectionInput";
-import CharacterSelectionInput from "./inputs/CharacterSelectionInput";
 
 // Pixel rendering settings
 settings.SCALE_MODE = SCALE_MODES.NEAREST;
+const container = document.getElementById("pixi-content") as HTMLElement;
+const canvas = document.getElementById("pixi-canvas") as HTMLCanvasElement;
 
-const gameContainer = document.getElementById("pixi-content");
-
-const app = new Application({
-  view: document.getElementById("pixi-canvas") as HTMLCanvasElement,
-  resolution: window.devicePixelRatio || 1,
-  autoDensity: true,
-  width: gameContainer?.clientWidth,
-  height: gameContainer?.clientHeight,
+// Create new game
+const game = new Game({
+  gameContainer: container,
+  gameCanvas: canvas,
 });
 
-const input = new DirectionInput();
-const charSelection = new CharacterSelectionInput();
+const boardConfigs = [{ mapPath: "img/Map/00.png", mapOffset: { y: -8 } }];
+const characterConfigs = [
+  {
+    name: "Lyn",
+    initialPositions: {
+      x: game.screen.width / 2,
+      y: game.screen.height / 2,
+    },
+    spriteData: dataLyn,
+    anchorOverwrite: { x: 0.5 },
+    animationSpeed: 0.05,
+    moveSpeed: 1,
+  },
+  {
+    name: "Hector",
+    initialPositions: {
+      x: game.screen.width / 2 + 16,
+      y: game.screen.height / 2 + 32,
+    },
+    spriteData: dataHector,
+    anchorOverwrite: { x: 0.5 },
+    animationSpeed: 0.05,
+    moveSpeed: 1,
+  },
+];
 
-// Load characters
-const lyn = new Character({
-  name: "Lyn",
-  x: app.screen.width / 2,
-  y: app.screen.height / 2,
-  spriteData: dataLyn,
-  anchorOverwrite: { x: 0.5 },
-  animationSpeed: 0.05,
-  moveSpeed: 1,
-});
+game.setup({ boardConfigs: boardConfigs, characterConfigs: characterConfigs });
 
-const hector = new Character({
-  name: "Hector",
-  x: app.screen.width / 2 + 16,
-  y: app.screen.height / 2 + 32,
-  spriteData: dataHector,
-  anchorOverwrite: { x: 0.5 },
-  animationSpeed: 0.05,
-  moveSpeed: 1,
-});
-
-const characters = [lyn, hector];
-charSelection.characterList = characters;
-app.stage.addChild(board);
-app.stage.addChild(lyn.animation);
-app.stage.addChild(hector.animation);
-
-// Add a ticker callback to move the sprite back and forth
-// let elapsed = 0.0;
-app.ticker.add(() => {
-  // console.log(charSelection.selected);
-  lyn.update({ arrow: input.direction });
-  hector.update({ arrow: input.direction });
-});
+game.start();
