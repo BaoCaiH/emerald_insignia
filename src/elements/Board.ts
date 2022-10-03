@@ -1,11 +1,13 @@
-import { Sprite, settings, SCALE_MODES } from "pixi.js";
+import { Sprite, Texture } from "pixi.js";
 
-// Pixel rendering settings
-settings.SCALE_MODE = SCALE_MODES.NEAREST;
+class Board extends Sprite {
+  constructor(config: { mapPath: string; xOffset?: number; yOffset?: number }) {
+    super();
+    this.texture = Texture.from(config.mapPath);
+    this.anchor.set(0);
+    this.x = config.xOffset || 0;
+    this.y = config.yOffset || 0;
+  }
+}
 
-const board: Sprite = Sprite.from("img/Map/00.png");
-board.anchor.set(0);
-board.x = 0;
-board.y = -8;
-
-export default board;
+export default Board;
