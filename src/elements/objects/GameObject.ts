@@ -27,13 +27,24 @@ class GameObject {
     return this.internalSprite.animation;
   }
 
-  update(config?: object) {
-    if (config) {
+  update(config?: { deltaTime: number }) {
+    if (config?.deltaTime) {
+      this.animation.update(config.deltaTime);
     }
   }
 
+  playAnimation() {
+    this.internalSprite.play();
+  }
+  stopAnimation() {
+    this.internalSprite.stop();
+  }
+  restartAnimation() {
+    this.internalSprite.restart();
+  }
+
   protected changeAnimation(animation: string) {
-    return this.internalSprite.changeAnimation(animation);
+    this.internalSprite.changeAnimation(animation);
   }
 
   get isFocus() {
