@@ -1,9 +1,12 @@
 import Character from "../elements/objects/Character";
+import GameObject from "../elements/objects/GameObject";
+import Spotlight from "../elements/objects/Spotlight";
 import Input from "./Input";
 
 class CharacterSelectionInput extends Input {
   characters: Character[] | undefined;
   characterIndex: number;
+  spotlight?: Spotlight;
   constructor() {
     super();
     this.characterIndex = -1;
@@ -23,11 +26,19 @@ class CharacterSelectionInput extends Input {
     this.characters?.forEach((character) => {
       if (this.characters?.indexOf(character) === this.characterIndex) {
         character.focus = true;
+        this.spotlight?.setSpotlight(character);
       } else {
         character.focus = false;
       }
     });
   }
+
+  setSpotlight(gameObject: GameObject) {
+    if (this.spotlight) {
+      this.spotlight.gameObject = gameObject;
+    }
+  }
+
   set characterList(characters: Character[]) {
     this.characters = characters;
   }
