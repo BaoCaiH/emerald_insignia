@@ -26,17 +26,16 @@ class Character extends GameObject {
     };
   }
 
-  override update(config?: { arrow: string; deltaTime: number }) {
+  override update(state?: { arrow: string }) {
     this.tweening();
 
     if (this.tweenRemaining === 0) {
-      if (config?.arrow && this.isFocus) {
-        this.startTweening(config.arrow);
+      if (state?.arrow && this.isFocus) {
+        this.startTweening(state.arrow);
       } else {
         this.changeDirection("idle");
       }
     }
-    super.update(config);
   }
 
   private startTweening(arrow: string) {

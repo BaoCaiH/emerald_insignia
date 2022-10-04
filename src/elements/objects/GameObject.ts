@@ -27,20 +27,19 @@ class GameObject {
     return this.internalSprite.animation;
   }
 
-  update(config?: { deltaTime: number }) {
-    if (config?.deltaTime) {
-      this.animation.update(config.deltaTime);
+  update(state?: {}) {
+    if (state) {
     }
   }
 
   playAnimation() {
-    this.internalSprite.play();
+    this.animation.play();
   }
   stopAnimation() {
-    this.internalSprite.stop();
+    this.animation.stop();
   }
   restartAnimation() {
-    this.internalSprite.restart();
+    this.animation.gotoAndPlay(0);
   }
 
   protected changeAnimation(animation: string) {

@@ -1,22 +1,29 @@
 import { Application, ISpritesheetData } from "pixi.js";
-import Board from "./Board";
-import Character from "./objects/Character";
-import CharacterGroup from "./groups/CharacterGroup";
-import DirectionInput from "../inputs/DirectionInput";
 import CharacterSelectionInput from "../inputs/CharacterSelectionInput";
+import DirectionInput from "../inputs/DirectionInput";
+import Board from "./Board";
+import CharacterGroup from "./groups/CharacterGroup";
+import Character from "./objects/Character";
+import Spotlight from "./objects/Spotlight";
 
 class Game {
   gameContainer: HTMLElement;
   application: Application;
-  inputs: { input: DirectionInput; charSelection: CharacterSelectionInput };
+  inputs: {
+    input: DirectionInput;
+    characterSelection: CharacterSelectionInput;
+  };
   boards: Board[];
   characterGroup: CharacterGroup;
+  gameMode: string;
+  spotlight: Spotlight;
   constructor(config: {
     gameContainer: HTMLElement;
     gameCanvas: HTMLCanvasElement;
+    gameMode?: string;
   }) {
     // Setup barebone
-    const { gameContainer, gameCanvas } = config;
+    const { gameContainer, gameCanvas, gameMode } = config;
     this.gameContainer = gameContainer;
     this.application = new Application({
       view: gameCanvas,
@@ -25,12 +32,18 @@ class Game {
       width: this.gameContainer?.clientWidth,
       height: this.gameContainer?.clientHeight,
     });
+    // Setup viewport
+    const centerStage = { x: this.screen.width / 2, y: this.screen.height / 2 };
+    this.stage.pivot.copyFrom(centerStage);
+    this.stage.position = centerStage;
+    // Setup interactions
     this.inputs = this.loadInputs();
     this.boards = [] as Board[];
     this.characterGroup = new CharacterGroup("players", [] as Character[]);
-    document.addEventListener("animationChanged", (event) => {
-      console.log(event);
-    });
+    // TODO: If single, game hold the spotlight, shines on whichever object is selected
+    // If multi, Player Character hold the spotlight and can change from self to cursor
+    this.gameMode = gameMode || "single";
+    this.spotlight = new Spotlight(this.screen.width, this.screen.height);
   }
 
   setup(config: {
@@ -48,9 +61,12 @@ class Game {
     const { boardConfigs, characterConfigs } = config;
     this.loadBoards(boardConfigs);
     this.characterGroup.addCharacters(this.loadCharacters(characterConfigs));
-    console.log(this.characterGroup);
 
-    this.inputs.charSelection.characterList = this.characterGroup.characters;
+    // Hand the character selection input the character list and spotlight to set
+    this.inputs.characterSelection.characterList =
+      this.characterGroup.characters;
+    this.inputs.characterSelection.spotlight = this.spotlight;
+
     this.application.stage.addChild(
       this.boards[0],
       ...this.characterGroup.characters.map((character) => character.animation)
@@ -60,7 +76,7 @@ class Game {
   loadInputs() {
     return {
       input: new DirectionInput(),
-      charSelection: new CharacterSelectionInput(),
+      characterSelection: new CharacterSelectionInput(),
     };
   }
 
@@ -115,16 +131,29 @@ class Game {
   }
 
   start() {
-    this.application.ticker.add((delta) => {
+    this.application.ticker.add(() => {
       this.characterGroup.update({
         arrow: this.inputs.input.direction,
-        deltaTime: delta / 4,
       });
+      if (this.spotlight.gameObject) {
+        // Move the screen pivot (camera) to the spotlight
+        this.application.stage.pivot.copyFrom(
+          this.spotlight.gameObject.animation.position
+        );
+      }
     });
   }
 
   get screen() {
     return this.application.screen;
+  }
+
+  get stage() {
+    return this.application.stage;
+  }
+
+  get pivot() {
+    return this.stage.pivot;
   }
 }
 
