@@ -71,27 +71,15 @@ class ObjectSprite {
     this.y = yDest;
   }
 
-  play() {
-    this.animation.play();
-  }
-
-  stop() {
-    this.animation.stop();
-  }
-
-  restart() {
-    this.animation.gotoAndPlay(0);
-  }
-
   changeAnimation(animation: string) {
     if (
       animation !== this.internalCurrentAnimation &&
       Object.keys(this.textures).includes(animation)
     ) {
       this.internalCurrentAnimation = animation;
-      this.stop();
+      this.animation.stop();
       this.updateAnimation();
-      this.play();
+      this.animation.play();
     }
   }
 
