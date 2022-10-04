@@ -1,8 +1,8 @@
-import Characters from "../elements/Character";
+import Character from "../elements/objects/Character";
 import Input from "./Input";
 
 class CharacterSelectionInput extends Input {
-  characters: Characters[] | undefined;
+  characters: Character[] | undefined;
   characterIndex: number;
   constructor() {
     super();
@@ -14,7 +14,6 @@ class CharacterSelectionInput extends Input {
       if (keyReleased === "KeyC" && this.characters) {
         this.characterIndex =
           (this.characterIndex + 1) % this.characters.length;
-        console.log(this.characterIndex);
         this.setFocus();
       }
     });
@@ -23,15 +22,13 @@ class CharacterSelectionInput extends Input {
   setFocus() {
     this.characters?.forEach((character) => {
       if (this.characters?.indexOf(character) === this.characterIndex) {
-        console.log(character.internalName);
-
         character.focus = true;
       } else {
         character.focus = false;
       }
     });
   }
-  set characterList(characters: Characters[]) {
+  set characterList(characters: Character[]) {
     this.characters = characters;
   }
 }
