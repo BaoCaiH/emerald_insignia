@@ -1,7 +1,7 @@
 import { ISpritesheetData } from "pixi.js";
 import GameObject from "./GameObject";
 
-class Characters extends GameObject {
+class Character extends GameObject {
   protected tweenRemaining: number;
   tweeningInstruction: Record<string, [string, number]>;
   protected moveSpeed: number;
@@ -26,7 +26,7 @@ class Characters extends GameObject {
     };
   }
 
-  override update(config?: { arrow: string }) {
+  override update(config?: { arrow: string; deltaTime: number }) {
     this.tweening();
 
     if (this.tweenRemaining === 0) {
@@ -36,6 +36,7 @@ class Characters extends GameObject {
         this.changeDirection("idle");
       }
     }
+    super.update(config);
   }
 
   private startTweening(arrow: string) {
@@ -65,4 +66,4 @@ class Characters extends GameObject {
   }
 }
 
-export default Characters;
+export default Character;

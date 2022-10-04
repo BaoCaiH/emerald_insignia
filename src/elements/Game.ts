@@ -1,6 +1,7 @@
 import { Application, ISpritesheetData } from "pixi.js";
 import Board from "./Board";
-import Character from "./Character";
+import Character from "./objects/Character";
+import CharacterGroup from "./groups/CharacterGroup";
 import DirectionInput from "../inputs/DirectionInput";
 import CharacterSelectionInput from "../inputs/CharacterSelectionInput";
 
@@ -9,7 +10,7 @@ class Game {
   application: Application;
   inputs: { input: DirectionInput; charSelection: CharacterSelectionInput };
   boards: Board[];
-  characters: Character[];
+  characterGroup: CharacterGroup;
   constructor(config: {
     gameContainer: HTMLElement;
     gameCanvas: HTMLCanvasElement;
@@ -26,7 +27,10 @@ class Game {
     });
     this.inputs = this.loadInputs();
     this.boards = [] as Board[];
-    this.characters = [] as Character[];
+    this.characterGroup = new CharacterGroup("players", [] as Character[]);
+    document.addEventListener("animationChanged", (event) => {
+      console.log(event);
+    });
   }
 
   setup(config: {
@@ -43,13 +47,13 @@ class Game {
   }) {
     const { boardConfigs, characterConfigs } = config;
     this.loadBoards(boardConfigs);
-    this.loadCharacters(characterConfigs);
-    console.log(this.characters);
+    this.characterGroup.addCharacters(this.loadCharacters(characterConfigs));
+    console.log(this.characterGroup);
 
-    this.inputs.charSelection.characterList = this.characters;
+    this.inputs.charSelection.characterList = this.characterGroup.characters;
     this.application.stage.addChild(
       this.boards[0],
-      ...this.characters.map((character) => character.animation)
+      ...this.characterGroup.characters.map((character) => character.animation)
     );
   }
 
@@ -87,36 +91,34 @@ class Game {
       moveSpeed?: number;
     }[]
   ) {
-    this.characters = [
-      ...this.characters,
-      ...characterConfigs.map((characterConfig) => {
-        const {
-          name,
-          initialPositions,
-          spriteData,
-          anchorOverwrite,
-          currentAnimation,
-          animationSpeed,
-          moveSpeed,
-        } = characterConfig;
-        return new Character({
-          name: name,
-          x: initialPositions.x,
-          y: initialPositions.y,
-          spriteData: spriteData,
-          anchorOverwrite: anchorOverwrite,
-          currentAnimation: currentAnimation,
-          animationSpeed: animationSpeed,
-          moveSpeed: moveSpeed,
-        });
-      }),
-    ];
+    return characterConfigs.map((characterConfig) => {
+      const {
+        name,
+        initialPositions,
+        spriteData,
+        anchorOverwrite,
+        currentAnimation,
+        animationSpeed,
+        moveSpeed,
+      } = characterConfig;
+      return new Character({
+        name: name,
+        x: initialPositions.x,
+        y: initialPositions.y,
+        spriteData: spriteData,
+        anchorOverwrite: anchorOverwrite,
+        currentAnimation: currentAnimation,
+        animationSpeed: animationSpeed,
+        moveSpeed: moveSpeed,
+      });
+    });
   }
 
   start() {
-    this.application.ticker.add(() => {
-      this.characters.forEach((character) => {
-        character.update({ arrow: this.inputs.input.direction });
+    this.application.ticker.add((delta) => {
+      this.characterGroup.update({
+        arrow: this.inputs.input.direction,
+        deltaTime: delta / 4,
       });
     });
   }
