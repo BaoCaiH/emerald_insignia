@@ -1,4 +1,5 @@
 import { ISpritesheetData } from "pixi.js";
+import Board from "../Board";
 import ObjectSprite from "./ObjectSprite";
 
 class GameObject {
@@ -7,10 +8,12 @@ class GameObject {
   protected allowedDirections: string[];
   protected internalSprite: ObjectSprite;
   protected internalIsFocus: boolean;
+  protected internalBoard: Board;
   constructor(config: {
     name?: string;
     x: number;
     y: number;
+    board: Board;
     spriteData: ISpritesheetData;
     anchorOverwrite?: Record<string, number>;
     currentAnimation?: string;
@@ -21,10 +24,15 @@ class GameObject {
     this.allowedDirections = ["idle", "focus", "left", "right", "up", "down"];
     this.internalIsFocus = false;
     this.internalSprite = new ObjectSprite(config);
+    this.internalBoard = config.board;
   }
 
   get animation() {
     return this.internalSprite.animation;
+  }
+
+  get board() {
+    return this.internalBoard;
   }
 
   update(state?: {}) {
