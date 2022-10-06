@@ -25,6 +25,7 @@ class GameObject {
     this.internalIsFocus = false;
     this.internalSprite = new ObjectSprite(config);
     this.internalBoard = config.board;
+    this.board.addObstacle(this.x, this.y);
   }
 
   get animation() {

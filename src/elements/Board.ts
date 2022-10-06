@@ -1,6 +1,10 @@
 import { Sprite, Texture } from "pixi.js";
 import { maps } from "./maps";
-import { toGridCoordString } from "../utils/coordinates";
+import {
+  toGridCoordString,
+  zipCoordToString,
+  nextPosition,
+} from "../utils/coordinates";
 
 // console.log(fs.readFileSync);
 
@@ -30,7 +34,21 @@ class Board extends Sprite {
   }
 
   isOccupied(x: number, y: number) {
-    return this.collisions[`${x},${y}`] || false;
+    return this.collisions[zipCoordToString(x, y)] || false;
+  }
+
+  addObstacle(x: number, y: number) {
+    this.collisions[zipCoordToString(x, y)] = true;
+  }
+
+  removeObstacle(x: number, y: number) {
+    delete this.collisions[zipCoordToString(x, y)];
+  }
+
+  moveObstacle(xPast: number, yPast: number, direction: string) {
+    const { x, y } = nextPosition(xPast, yPast, direction);
+    this.removeObstacle(xPast, yPast);
+    this.addObstacle(x, y);
   }
 }
 

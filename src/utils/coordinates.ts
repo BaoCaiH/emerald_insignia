@@ -6,12 +6,16 @@ export const fromGridCoord = (x: number, y: number, tileSize: number = 16) => {
   return { x: x / tileSize, y: y / tileSize };
 };
 
+export const zipCoordToString = (x: number, y: number) => {
+  return `${x},${y}`;
+};
+
 export const toGridCoordString = (
   x: number,
   y: number,
   tileSize: number = 16
 ) => {
-  return `${x * tileSize},${y * tileSize}`;
+  return zipCoordToString(x * tileSize, y * tileSize);
 };
 
 export const nextPosition = (
