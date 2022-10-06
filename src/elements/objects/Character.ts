@@ -47,6 +47,7 @@ class Character extends GameObject {
     }
     if (this.attemptMoveSuccess(arrow)) {
       this.tweenRemaining = 16;
+      this.board.moveObstacle(this.x, this.y, arrow);
     }
   }
 
