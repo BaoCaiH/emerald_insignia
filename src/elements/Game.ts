@@ -21,9 +21,10 @@ class Game {
     gameContainer: HTMLElement;
     gameCanvas: HTMLCanvasElement;
     gameMode?: string;
+    startingView?: { x: number; y: number };
   }) {
     // Setup barebone
-    const { gameContainer, gameCanvas, gameMode } = config;
+    const { gameContainer, gameCanvas, gameMode, startingView } = config;
     this.gameContainer = gameContainer;
     this.application = new Application({
       view: gameCanvas,
@@ -34,7 +35,7 @@ class Game {
     });
     // Setup viewport
     const centerStage = { x: this.screen.width / 2, y: this.screen.height / 2 };
-    this.stage.pivot.copyFrom(centerStage);
+    this.stage.pivot.copyFrom(startingView ? startingView : centerStage);
     this.stage.position = centerStage;
     // Setup interactions
     this.inputs = this.loadInputs();
@@ -60,7 +61,9 @@ class Game {
   }) {
     const { boardConfigs, characterConfigs } = config;
     this.loadBoards(boardConfigs);
-    this.characterGroup.addCharacters(this.loadCharacters(characterConfigs));
+    this.characterGroup.addCharacters(
+      this.loadCharacters(characterConfigs, this.boards[0])
+    );
 
     // Hand the character selection input the character list and spotlight to set
     this.inputs.characterSelection.characterList =
@@ -105,7 +108,8 @@ class Game {
       currentAnimation?: string;
       animationSpeed?: number;
       moveSpeed?: number;
-    }[]
+    }[],
+    board: Board
   ) {
     return characterConfigs.map((characterConfig) => {
       const {
@@ -121,6 +125,7 @@ class Game {
         name: name,
         x: initialPositions.x,
         y: initialPositions.y,
+        board: board,
         spriteData: spriteData,
         anchorOverwrite: anchorOverwrite,
         currentAnimation: currentAnimation,

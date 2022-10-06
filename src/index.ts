@@ -2,6 +2,7 @@ import { settings, SCALE_MODES } from "pixi.js";
 import Game from "./elements/Game";
 import dataLyn from "./characters/Lyn/onMap.json";
 import dataHector from "./characters/Hector/onMap.json";
+import { toGridCoord } from "./utils/coordinates";
 
 // Pixel rendering settings
 settings.SCALE_MODE = SCALE_MODES.NEAREST;
@@ -12,16 +13,16 @@ const canvas = document.getElementById("pixi-canvas") as HTMLCanvasElement;
 const game = new Game({
   gameContainer: container,
   gameCanvas: canvas,
+  startingView: toGridCoord(15, 3),
 });
 
-const boardConfigs = [{ mapPath: "img/Map/00.png", mapOffset: { y: -8 } }];
+const boardConfigs = [
+  { mapPath: "img/Map/01.png", mapOffset: { x: -8, y: -8 } },
+];
 const characterConfigs = [
   {
     name: "Lyn",
-    initialPositions: {
-      x: game.screen.width / 2,
-      y: game.screen.height / 2,
-    },
+    initialPositions: toGridCoord(14, 3),
     spriteData: dataLyn,
     anchorOverwrite: { x: 0.5 },
     animationSpeed: 0.05,
@@ -29,10 +30,7 @@ const characterConfigs = [
   },
   {
     name: "Hector",
-    initialPositions: {
-      x: game.screen.width / 2 + 16,
-      y: game.screen.height / 2 + 32,
-    },
+    initialPositions: toGridCoord(15, 4),
     spriteData: dataHector,
     anchorOverwrite: { x: 0.5 },
     animationSpeed: 0.05,
