@@ -1,5 +1,7 @@
 import { ISpritesheetData } from "pixi.js";
+import Board from "../Board";
 import GameObject from "./GameObject";
+import { nextPosition } from "../../utils/coordinates";
 
 class Character extends GameObject {
   protected tweenRemaining: number;
@@ -9,6 +11,7 @@ class Character extends GameObject {
     name?: string;
     x: number;
     y: number;
+    board: Board;
     spriteData: ISpritesheetData;
     anchorOverwrite?: Record<string, number> | undefined;
     currentAnimation?: string | undefined;
@@ -42,7 +45,9 @@ class Character extends GameObject {
     if (this.direction !== arrow) {
       this.changeDirection(arrow);
     }
-    this.tweenRemaining = 16;
+    if (this.attemptMoveSuccess(arrow)) {
+      this.tweenRemaining = 16;
+    }
   }
 
   private changeDirection(arrow: string) {
@@ -62,6 +67,11 @@ class Character extends GameObject {
       }
       this.tweenRemaining -= this.moveSpeed;
     }
+  }
+
+  private attemptMoveSuccess(direction: string) {
+    const { x, y } = nextPosition(this.x, this.y, direction);
+    return !this.board.isOccupied(x, y);
   }
 }
 
