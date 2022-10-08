@@ -1,5 +1,5 @@
 import { ISpritesheetData } from "pixi.js";
-import Board from "../Board";
+import Board from "../overworld/Board";
 import ObjectSprite from "./ObjectSprite";
 
 class GameObject {

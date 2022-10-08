@@ -1,10 +1,10 @@
 import { Application, ISpritesheetData } from "pixi.js";
-import CharacterSelectionInput from "../inputs/CharacterSelectionInput";
-import DirectionInput from "../inputs/DirectionInput";
+import CharacterSelectionInput from "../../inputs/CharacterSelectionInput";
+import DirectionInput from "../../inputs/DirectionInput";
 import Board from "./Board";
-import CharacterGroup from "./groups/CharacterGroup";
-import Character from "./objects/Character";
-import Spotlight from "./objects/Spotlight";
+import CharacterGroup from "../groups/CharacterGroup";
+import Character from "../objects/Character";
+import Spotlight from "../objects/Spotlight";
 
 class Game {
   gameContainer: HTMLElement;
