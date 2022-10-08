@@ -1,10 +1,10 @@
 import { Sprite, Texture } from "pixi.js";
-import { maps } from "./maps";
+import { maps } from "../maps";
 import {
   toGridCoordString,
   zipCoordToString,
   nextPosition,
-} from "../utils/coordinates";
+} from "../../utils/coordinates";
 
 // console.log(fs.readFileSync);
 
@@ -17,7 +17,6 @@ class Board extends Sprite {
     this.x = config.xOffset || 0;
     this.y = config.yOffset || 0;
     this.collisions = this.loadCollision(config.mapPath);
-    console.log(this.collisions);
   }
 
   loadCollision(mapPath: string) {

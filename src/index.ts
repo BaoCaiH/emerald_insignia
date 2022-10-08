@@ -1,5 +1,5 @@
 import { settings, SCALE_MODES } from "pixi.js";
-import Game from "./elements/Game";
+import Game from "./elements/overworld/Game";
 import dataLyn from "./characters/Lyn/onMap.json";
 import dataHector from "./characters/Hector/onMap.json";
 import { toGridCoord } from "./utils/coordinates";
