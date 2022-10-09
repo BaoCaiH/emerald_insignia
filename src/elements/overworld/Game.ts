@@ -2,7 +2,6 @@ import { Application, ISpritesheetData } from "pixi.js";
 import CharacterSelectionInput from "../../inputs/CharacterSelectionInput";
 import DirectionInput from "../../inputs/DirectionInput";
 import Board from "./Board";
-import CharacterGroup from "../groups/CharacterGroup";
 import Character from "../objects/Character";
 import Spotlight from "../objects/Spotlight";
 
@@ -10,11 +9,11 @@ class Game {
   gameContainer: HTMLElement;
   application: Application;
   inputs: {
-    input: DirectionInput;
+    directional: DirectionInput;
     characterSelection: CharacterSelectionInput;
   };
-  boards: Board[];
-  characterGroup: CharacterGroup;
+  boards: Record<string, Board>;
+  currentBoard?: string;
   gameMode: string;
   spotlight: Spotlight;
   constructor(config: {
@@ -39,64 +38,56 @@ class Game {
     this.stage.position = centerStage;
     // Setup interactions
     this.inputs = this.loadInputs();
-    this.boards = [] as Board[];
-    this.characterGroup = new CharacterGroup("players", [] as Character[]);
+    this.boards = {};
     // TODO: If single, game hold the spotlight, shines on whichever object is selected
     // If multi, Player Character hold the spotlight and can change from self to cursor
     this.gameMode = gameMode || "single";
     this.spotlight = new Spotlight(this.screen.width, this.screen.height);
-  }
-
-  setup(config: {
-    boardConfigs: { mapPath: string; mapOffset?: { x?: number; y?: number } }[];
-    characterConfigs: {
-      name: string;
-      initialPositions: { x: number; y: number };
-      spriteData: ISpritesheetData;
-      anchorOverwrite?: Record<string, number>;
-      currentAnimation?: string;
-      animationSpeed?: number;
-      moveSpeed?: number;
-    }[];
-  }) {
-    const { boardConfigs, characterConfigs } = config;
-    this.loadBoards(boardConfigs);
-    this.characterGroup.addCharacters(
-      this.loadCharacters(characterConfigs, this.boards[0])
-    );
-
-    // Hand the character selection input the character list and spotlight to set
-    this.inputs.characterSelection.characterList =
-      this.characterGroup.characters;
     this.inputs.characterSelection.spotlight = this.spotlight;
-
-    this.application.stage.addChild(
-      this.boards[0],
-      ...this.characterGroup.characters.map((character) => character.animation)
-    );
   }
 
   loadInputs() {
     return {
-      input: new DirectionInput(),
+      directional: new DirectionInput(),
       characterSelection: new CharacterSelectionInput(),
     };
   }
 
+  addBoard(boardConfig: {
+    name: string;
+    xOffset?: number;
+    yOffset?: number;
+    characters?: Character[];
+    startPoint?: { x: number; y: number };
+  }) {
+    this.boards[boardConfig.name] = new Board(boardConfig);
+  }
+
   loadBoards(
-    boardConfigs: { mapPath: string; mapOffset?: { x?: number; y?: number } }[]
+    boardConfigs: {
+      name: string;
+      xOffset?: number;
+      yOffset?: number;
+      characters?: Character[];
+      startPoint?: { x: number; y: number };
+    }[]
   ) {
-    this.boards = [
-      ...this.boards,
-      ...boardConfigs.map((boardConfig) => {
-        const { mapPath, mapOffset } = boardConfig;
-        return new Board({
-          mapPath: mapPath,
-          xOffset: mapOffset?.x || 0,
-          yOffset: mapOffset?.y || 0,
-        });
-      }),
-    ];
+    boardConfigs.forEach((boardConfig) => {
+      this.addBoard(boardConfig);
+    });
+  }
+
+  addCharacter(characterConfig: {
+    name: string;
+    initialPositions: { x: number; y: number };
+    spriteData: ISpritesheetData;
+    anchorOverwrite?: Record<string, number>;
+    currentAnimation?: string;
+    animationSpeed?: number;
+    moveSpeed?: number;
+  }) {
+    const newChar = this.board.addCharacter(characterConfig);
+    this.stage.addChild(newChar.animation);
   }
 
   loadCharacters(
@@ -108,37 +99,27 @@ class Game {
       currentAnimation?: string;
       animationSpeed?: number;
       moveSpeed?: number;
-    }[],
-    board: Board
+    }[]
   ) {
-    return characterConfigs.map((characterConfig) => {
-      const {
-        name,
-        initialPositions,
-        spriteData,
-        anchorOverwrite,
-        currentAnimation,
-        animationSpeed,
-        moveSpeed,
-      } = characterConfig;
-      return new Character({
-        name: name,
-        x: initialPositions.x,
-        y: initialPositions.y,
-        board: board,
-        spriteData: spriteData,
-        anchorOverwrite: anchorOverwrite,
-        currentAnimation: currentAnimation,
-        animationSpeed: animationSpeed,
-        moveSpeed: moveSpeed,
-      });
+    characterConfigs.forEach((characterConfig) => {
+      this.addCharacter(characterConfig);
     });
+  }
+
+  changeBoard(name: string) {
+    this.currentBoard = name;
+    this.stage.removeChildren();
+    this.stage.addChild(this.board.sprite, this.board.cursor.animation);
+    this.inputs.characterSelection.characterList =
+      this.board.players.characters;
   }
 
   start() {
     this.application.ticker.add(() => {
-      this.characterGroup.update({
-        arrow: this.inputs.input.direction,
+      // console.log(this.board);
+
+      this.board.update({
+        arrow: this.inputs.directional.direction,
       });
       if (this.spotlight.gameObject) {
         // Move the screen pivot (camera) to the spotlight
@@ -159,6 +140,13 @@ class Game {
 
   get pivot() {
     return this.stage.pivot;
+  }
+
+  get board() {
+    if (this.currentBoard) {
+      return this.boards[this.currentBoard];
+    }
+    throw new Error("Please add at leat 1 board before using");
   }
 }
 

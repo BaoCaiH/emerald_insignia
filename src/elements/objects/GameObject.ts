@@ -16,11 +16,11 @@ class GameObject {
     board: Board;
     spriteData: ISpritesheetData;
     anchorOverwrite?: Record<string, number>;
-    currentAnimation?: string;
+    initialAnimation?: string;
     animationSpeed?: number;
   }) {
     this.internalName = config.name || "unknown";
-    this.internalDirection = config.currentAnimation || "idle";
+    this.internalDirection = config.initialAnimation || "idle";
     this.allowedDirections = ["idle", "focus", "left", "right", "up", "down"];
     this.internalIsFocus = false;
     this.internalSprite = new ObjectSprite(config);
@@ -55,7 +55,7 @@ class GameObject {
     this.internalSprite.changeAnimation(animation);
   }
 
-  get isFocus() {
+  get focus() {
     return this.internalIsFocus;
   }
 

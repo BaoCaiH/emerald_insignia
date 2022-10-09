@@ -33,7 +33,7 @@ class Character extends GameObject {
     this.tweening();
 
     if (this.tweenRemaining === 0) {
-      if (state?.arrow && this.isFocus) {
+      if (state?.arrow && this.focus) {
         this.startTweening(state.arrow);
       } else {
         this.changeDirection("idle");
@@ -42,19 +42,21 @@ class Character extends GameObject {
   }
 
   protected startTweening(arrow: string) {
-    if (this.direction !== arrow) {
-      this.changeDirection(arrow);
+    this.changeDirection(arrow);
+    if (this.attemptMoveSuccess()) {
+      this.setDestination();
     }
-    if (this.attemptMoveSuccess(arrow)) {
-      this.tweenRemaining = 16;
-      this.board.moveObstacle(this.x, this.y, arrow);
-    }
+  }
+
+  protected setDestination() {
+    this.tweenRemaining = 16;
+    this.board.moveObstacle(this.x, this.y, this.direction);
   }
 
   protected changeDirection(arrow: string) {
     if (this.direction !== arrow) {
       this.direction = arrow;
-      this.changeAnimation(arrow);
+      this.changeAnimation(this.direction);
     }
   }
 
@@ -71,8 +73,8 @@ class Character extends GameObject {
     }
   }
 
-  protected attemptMoveSuccess(direction: string) {
-    const { x, y } = nextPosition(this.x, this.y, direction);
+  protected attemptMoveSuccess() {
+    const { x, y } = nextPosition(this.x, this.y, this.direction);
     return !this.board.isOccupied(x, y);
   }
 }

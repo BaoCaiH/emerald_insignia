@@ -1,5 +1,8 @@
 import GameObject from "./GameObject";
 
+/**
+ * Spotlight is a holder class that Game keeps to know where to focus its viewport
+ */
 class Spotlight {
   gameObject?: GameObject;
   readonly screenWidth: number;
