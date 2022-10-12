@@ -76,6 +76,10 @@ class GameObject {
     this.internalSprite.y = yDest;
   }
 
+  get position() {
+    return { x: this.x, y: this.y };
+  }
+
   get direction() {
     return this.internalDirection;
   }

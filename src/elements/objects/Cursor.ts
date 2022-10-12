@@ -11,9 +11,10 @@ class Cursor extends Character {
       y: y,
       board: board,
       spriteData: cursorData,
+      anchorOverwrite: { x: 0.5 },
       currentAnimation: "normal",
       animationSpeed: 0.05,
-      moveSpeed: 3,
+      moveSpeed: 2,
     });
     this.focus = true;
     this.animation.play();
