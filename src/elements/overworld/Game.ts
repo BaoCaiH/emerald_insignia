@@ -4,6 +4,7 @@ import DirectionInput from "../../inputs/DirectionInput";
 import Board from "./Board";
 import Character from "../objects/Character";
 import Spotlight from "../objects/Spotlight";
+import ABInput from "../../inputs/ABInput";
 
 class Game {
   gameContainer: HTMLElement;
@@ -50,6 +51,7 @@ class Game {
     return {
       directional: new DirectionInput(),
       characterSelection: new CharacterSelectionInput(),
+      abControl: new ABInput(this),
     };
   }
 
@@ -121,12 +123,7 @@ class Game {
       this.board.update({
         arrow: this.inputs.directional.direction,
       });
-      if (this.spotlight.gameObject) {
-        // Move the screen pivot (camera) to the spotlight
-        this.application.stage.pivot.copyFrom(
-          this.spotlight.gameObject.animation.position
-        );
-      }
+      this.pivot.copyFrom(this.board.cursor.position);
     });
   }
 

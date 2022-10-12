@@ -31,8 +31,8 @@ class Board {
     this.collisions = {};
     this.loadObstacles();
     this.cursor = new Cursor({
-      x: (startPoint?.x || 0) - this.x,
-      y: (startPoint?.y || 0) - this.y,
+      x: startPoint?.x || 0,
+      y: startPoint?.y || 0,
       board: this,
     });
   }
@@ -61,6 +61,10 @@ class Board {
 
   get players() {
     return this.characters;
+  }
+
+  get spotlight() {
+    return { x: this.cursor.x, y: this.cursor.y };
   }
 
   addCharacter(characterConfig: {
@@ -104,6 +108,16 @@ class Board {
     data["floor"].forEach(([x, y]) => {
       this.addObstacle(x, y, true);
     });
+  }
+
+  getObjectAt(x: number, y: number) {
+    const objectFilter = this.players.characters.filter((character) => {
+      return character.x === x && character.y === y;
+    });
+    if (objectFilter.length > 0) {
+      return objectFilter[0];
+    }
+    return null;
   }
 
   isOccupied(x: number, y: number) {
