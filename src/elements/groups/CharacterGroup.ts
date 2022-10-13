@@ -2,18 +2,24 @@ import Character from "../objects/Character";
 import Group from "./Group";
 
 class CharacterGroup extends Group {
-  override holder: Character[];
-  constructor(name: string, characters: Character[]) {
+  protected override holder: Character[];
+  constructor(name: string, characters?: Character[]) {
     super(name);
-    this.holder = characters;
+    this.holder = characters || [];
   }
 
   get characters() {
     return this.holder;
   }
 
+  addCharacter(character: Character) {
+    this.holder.push(character);
+  }
+
   addCharacters(characters: Character[]) {
-    this.holder = [...this.holder, ...characters];
+    characters.forEach((character) => {
+      this.addCharacter(character);
+    });
   }
 
   update(state: { arrow: string }) {

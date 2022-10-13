@@ -1,5 +1,5 @@
 import { ISpritesheetData } from "pixi.js";
-import Board from "../Board";
+import Board from "../overworld/Board";
 import ObjectSprite from "./ObjectSprite";
 
 class GameObject {
@@ -16,11 +16,11 @@ class GameObject {
     board: Board;
     spriteData: ISpritesheetData;
     anchorOverwrite?: Record<string, number>;
-    currentAnimation?: string;
+    initialAnimation?: string;
     animationSpeed?: number;
   }) {
     this.internalName = config.name || "unknown";
-    this.internalDirection = config.currentAnimation || "idle";
+    this.internalDirection = config.initialAnimation || "idle";
     this.allowedDirections = ["idle", "focus", "left", "right", "up", "down"];
     this.internalIsFocus = false;
     this.internalSprite = new ObjectSprite(config);
@@ -45,17 +45,17 @@ class GameObject {
     this.animation.play();
   }
   stopAnimation() {
-    this.animation.stop();
+    this.animation.gotoAndStop(0);
   }
   restartAnimation() {
     this.animation.gotoAndPlay(0);
   }
 
-  protected changeAnimation(animation: string) {
+  changeAnimation(animation: string) {
     this.internalSprite.changeAnimation(animation);
   }
 
-  get isFocus() {
+  get focus() {
     return this.internalIsFocus;
   }
 
@@ -74,6 +74,10 @@ class GameObject {
   }
   set y(yDest: number) {
     this.internalSprite.y = yDest;
+  }
+
+  get position() {
+    return { x: this.x, y: this.y };
   }
 
   get direction() {
