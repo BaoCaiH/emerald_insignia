@@ -31,7 +31,6 @@ class Character extends GameObject {
 
   override update(state?: { arrow: string }) {
     this.tweening();
-
     if (this.tweenRemaining === 0) {
       if (state?.arrow && this.focus) {
         this.startTweening(state.arrow);

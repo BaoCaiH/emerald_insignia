@@ -45,7 +45,7 @@ class GameObject {
     this.animation.play();
   }
   stopAnimation() {
-    this.animation.stop();
+    this.animation.gotoAndStop(0);
   }
   restartAnimation() {
     this.animation.gotoAndPlay(0);
