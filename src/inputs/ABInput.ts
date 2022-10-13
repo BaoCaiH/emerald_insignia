@@ -16,8 +16,8 @@ class ABInput extends Input {
     document.addEventListener("keyup", (key) => {
       const cmd = this.map[key.code];
       if (cmd === "A") {
-        if (this.currentCharacter) {
-          this.releaseCharacter();
+        if (this.cursor.snapOn) {
+          this.cursor.releaseCharacter();
           return;
         }
         const objectAtCursor = this.board.getObjectAt(
@@ -25,11 +25,10 @@ class ABInput extends Input {
           this.cursor.y
         );
         if (objectAtCursor) {
-          this.currentCharacter = objectAtCursor;
-          this.currentCharacter.focus = true;
+          this.cursor.selectCharacter(objectAtCursor);
         }
       } else if (cmd === "B") {
-        this.releaseCharacter();
+        this.cursor.releaseCharacter();
       }
     });
   }
@@ -44,13 +43,6 @@ class ABInput extends Input {
 
   get characters() {
     return this.board.players.characters;
-  }
-
-  releaseCharacter() {
-    if (this.currentCharacter) {
-      this.currentCharacter.focus = false;
-      this.currentCharacter = undefined;
-    }
   }
 }
 
