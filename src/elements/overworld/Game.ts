@@ -124,6 +124,9 @@ class Game {
         arrow: this.inputs.directional.direction,
       });
       this.pivot.copyFrom(this.board.cursor.position);
+      // this.board.players.characters.forEach((character) => {
+      // console.log(`${character.internalName}: ${character.focus}`);
+      // });
     });
   }
 

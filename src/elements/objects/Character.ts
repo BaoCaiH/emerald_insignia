@@ -30,14 +30,28 @@ class Character extends GameObject {
   }
 
   override update(state?: { arrow: string }) {
-    this.tweening();
-    if (this.tweenRemaining === 0) {
-      if (state?.arrow && this.focus) {
-        this.startTweening(state.arrow);
-      } else {
-        this.changeDirection("idle");
-      }
+    if (this.tweenRemaining !== 0) {
+      this.tweening();
+      return;
     }
+    if (state?.arrow && this.focus) {
+      this.startTweening(state.arrow);
+      return;
+    }
+    this.changeDirection("idle");
+    if (this.focus) {
+      this.changeAnimation("focus");
+    }
+    // if (this.tweenRemaining === 0) {
+    //   if (state?.arrow && this.focus) {
+    //     this.startTweening(state.arrow);
+    //   } else {
+    //     this.changeDirection("idle");
+    //     if (this.focus) {
+    //       this.changeAnimation("focus");
+    //     }
+    //   }
+    // }
   }
 
   protected startTweening(arrow: string) {

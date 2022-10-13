@@ -51,7 +51,7 @@ class GameObject {
     this.animation.gotoAndPlay(0);
   }
 
-  protected changeAnimation(animation: string) {
+  changeAnimation(animation: string) {
     this.internalSprite.changeAnimation(animation);
   }
 
