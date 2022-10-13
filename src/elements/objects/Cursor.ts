@@ -39,12 +39,13 @@ class Cursor extends Character {
   releaseCharacter() {
     if (this.snapOn) {
       this.snapOn.focus = false;
+      this.snapOn.changeAnimation("idle");
       this.snapOn = undefined;
       this.restartAnimation();
     }
   }
 
-  protected override changeAnimation(_animation: string) {}
+  override changeAnimation(_animation: string) {}
 
   protected override setDestination() {
     this.tweenRemaining = 16;
