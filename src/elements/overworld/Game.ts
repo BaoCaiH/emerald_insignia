@@ -1,9 +1,8 @@
 import { Application, ISpritesheetData } from "pixi.js";
-import CharacterSelectionInput from "../../inputs/CharacterSelectionInput";
 import DirectionInput from "../../inputs/DirectionInput";
 import Board from "./Board";
 import Character from "../objects/Character";
-import Spotlight from "../objects/Spotlight";
+// import Spotlight from "../objects/Spotlight";
 import ABInput from "../../inputs/ABInput";
 
 class Game {
@@ -11,12 +10,12 @@ class Game {
   application: Application;
   inputs: {
     directional: DirectionInput;
-    characterSelection: CharacterSelectionInput;
+    abControl: ABInput;
   };
   boards: Record<string, Board>;
+  characters: Record<string, Character>;
   currentBoard?: string;
   gameMode: string;
-  spotlight: Spotlight;
   constructor(config: {
     gameContainer: HTMLElement;
     gameCanvas: HTMLCanvasElement;
@@ -40,17 +39,15 @@ class Game {
     // Setup interactions
     this.inputs = this.loadInputs();
     this.boards = {};
+    this.characters = {};
     // TODO: If single, game hold the spotlight, shines on whichever object is selected
     // If multi, Player Character hold the spotlight and can change from self to cursor
     this.gameMode = gameMode || "single";
-    this.spotlight = new Spotlight(this.screen.width, this.screen.height);
-    this.inputs.characterSelection.spotlight = this.spotlight;
   }
 
   loadInputs() {
     return {
       directional: new DirectionInput(),
-      characterSelection: new CharacterSelectionInput(),
       abControl: new ABInput(this),
     };
   }
@@ -112,8 +109,6 @@ class Game {
     this.currentBoard = name;
     this.stage.removeChildren();
     this.stage.addChild(this.board.sprite, this.board.cursor.animation);
-    this.inputs.characterSelection.characterList =
-      this.board.players.characters;
   }
 
   start() {
@@ -124,9 +119,6 @@ class Game {
         arrow: this.inputs.directional.direction,
       });
       this.pivot.copyFrom(this.board.cursor.position);
-      // this.board.players.characters.forEach((character) => {
-      // console.log(`${character.internalName}: ${character.focus}`);
-      // });
     });
   }
 
