@@ -25,7 +25,7 @@ class CharacterGroup extends Group {
   update(state: { arrow: string }) {
     // Get current state to compare later
     const currentState = this.characters
-      .map((character) => `${character.internalName}${character.direction}`)
+      .map((character) => `${character.name}${character.direction}`)
       .reduce((prev, curr) => `${prev}_${curr}`, "");
 
     // Update character loop
@@ -35,7 +35,7 @@ class CharacterGroup extends Group {
 
     // Check new state
     const newState = this.characters
-      .map((character) => `${character.internalName}${character.direction}`)
+      .map((character) => `${character.name}${character.direction}`)
       .reduce((prev, curr) => `${prev}_${curr}`, "");
     //  if any changed, synchronise animations
     if (newState !== currentState) {

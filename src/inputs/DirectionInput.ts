@@ -21,7 +21,6 @@ class DirectionInput extends Input {
       if (direction && !this.heldDirection.includes(direction)) {
         this.heldDirection.unshift(direction);
       }
-      //   console.log(this.heldDirection);
     });
     document.addEventListener("keyup", (key) => {
       const direction = this.map[key.code];
@@ -29,7 +28,6 @@ class DirectionInput extends Input {
       if (index > -1) {
         this.heldDirection.splice(index, 1);
       }
-      //   console.log(this.heldDirection);
     });
   }
 

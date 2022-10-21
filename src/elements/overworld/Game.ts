@@ -2,8 +2,8 @@ import { Application, ISpritesheetData } from "pixi.js";
 import DirectionInput from "../../inputs/DirectionInput";
 import Board from "./Board";
 import Character from "../objects/Character";
-// import Spotlight from "../objects/Spotlight";
 import ABInput from "../../inputs/ABInput";
+import Cursor from "../objects/Cursor";
 
 class Game {
   gameContainer: HTMLElement;
@@ -14,6 +14,7 @@ class Game {
   };
   boards: Record<string, Board>;
   characters: Record<string, Character>;
+  cursor: Cursor;
   currentBoard?: string;
   gameMode: string;
   constructor(config: {
@@ -40,6 +41,7 @@ class Game {
     this.inputs = this.loadInputs();
     this.boards = {};
     this.characters = {};
+    this.cursor = new Cursor(this.stage.pivot);
     // TODO: If single, game hold the spotlight, shines on whichever object is selected
     // If multi, Player Character hold the spotlight and can change from self to cursor
     this.gameMode = gameMode || "single";
@@ -78,21 +80,34 @@ class Game {
 
   addCharacter(characterConfig: {
     name: string;
-    initialPositions: { x: number; y: number };
     spriteData: ISpritesheetData;
     anchorOverwrite?: Record<string, number>;
     currentAnimation?: string;
     animationSpeed?: number;
     moveSpeed?: number;
   }) {
-    const newChar = this.board.addCharacter(characterConfig);
-    this.stage.addChild(newChar.animation);
+    const newCharacter = new Character(characterConfig);
+    const largestExistingId = Object.keys(this.characters)
+      .filter((id) => {
+        id.startsWith(newCharacter.name);
+      })
+      .sort((a, b) => {
+        return a > b ? -1 : a < b ? 1 : 0;
+      })[0];
+    this.stage.addChild(newCharacter.animation);
+    if (largestExistingId) {
+      const newId = (parseInt(largestExistingId.split("_")[1]) + 1)
+        .toString()
+        .padStart(4, "0");
+      this.characters[`${newCharacter.name}_${newId}`] = newCharacter;
+      return;
+    }
+    this.characters[`${newCharacter.name}_0000`] = newCharacter;
   }
 
   loadCharacters(
     characterConfigs: {
       name: string;
-      initialPositions: { x: number; y: number };
       spriteData: ISpritesheetData;
       anchorOverwrite?: Record<string, number>;
       currentAnimation?: string;
@@ -105,20 +120,75 @@ class Game {
     });
   }
 
+  /**
+   *
+   * @param name Name of the board
+   *
+   * Change to a board by its name.
+   *
+   * Clear canvas, add the board and cursor to the stage, zoom to the starting position.
+   */
   changeBoard(name: string) {
     this.currentBoard = name;
     this.stage.removeChildren();
-    this.stage.addChild(this.board.sprite, this.board.cursor.animation);
+    this.stage.addChild(this.board.sprite, this.cursor.animation);
+    this.cursor.position = this.board.startPoint;
+    this.pivot.copyFrom(this.cursor.position);
   }
 
+  putObject(objectId: string, position?: { x: number; y: number }) {
+    const targetObjecct = this.characters[objectId];
+    targetObjecct.addToBoard(this.board, position);
+    this.stage.addChild(targetObjecct.animation);
+  }
+
+  objectAt(x: number, y: number) {
+    const objectFilter = Object.values(this.characters).filter((character) => {
+      return character.x === x && character.y === y;
+    });
+    if (objectFilter.length > 0) {
+      return objectFilter[0];
+    }
+    return null;
+  }
+
+  /**
+   * Start game loop
+   *
+   * Update board (canvas), cursor, and camera
+   */
   start() {
     this.application.ticker.add(() => {
-      // console.log(this.board);
+      const inputDirection = this.inputs.directional.direction;
 
-      this.board.update({
-        arrow: this.inputs.directional.direction,
+      // Get current state to compare later
+      const currentState = Object.values(this.characters)
+        .map(
+          (character) =>
+            `${character.name}${character.direction}${character.focus}`
+        )
+        .reduce((prev, curr) => `${prev}_${curr}`, "");
+
+      // Update character loop
+      Object.values(this.characters).forEach((character) => {
+        character.update({ arrow: inputDirection });
       });
-      this.pivot.copyFrom(this.board.cursor.position);
+
+      // Check new state
+      const newState = Object.values(this.characters)
+        .map(
+          (character) =>
+            `${character.name}${character.direction}${character.focus}`
+        )
+        .reduce((prev, curr) => `${prev}_${curr}`, "");
+      //  if any changed, synchronise animations
+      if (newState !== currentState) {
+        Object.values(this.characters).forEach((character) => {
+          character.restartAnimation();
+        });
+      }
+      this.cursor.update({ arrow: inputDirection });
+      this.pivot.copyFrom(this.cursor.position);
     });
   }
 

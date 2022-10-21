@@ -25,7 +25,6 @@ const boardConfig = {
 const characterConfigs = [
   {
     name: "Lyn",
-    initialPositions: toGridCoord(14, 3),
     spriteData: dataLyn,
     anchorOverwrite: { x: 0.5 },
     animationSpeed: 0.07,
@@ -33,7 +32,6 @@ const characterConfigs = [
   },
   {
     name: "Hector",
-    initialPositions: toGridCoord(15, 4),
     spriteData: dataHector,
     anchorOverwrite: { x: 0.5 },
     animationSpeed: 0.07,
@@ -41,8 +39,10 @@ const characterConfigs = [
   },
 ];
 game.addBoard(boardConfig);
-game.changeBoard("plain_00");
 game.addCharacter(characterConfigs[0]);
 game.addCharacter(characterConfigs[1]);
+game.changeBoard("plain_00");
+game.putObject("Lyn_0000", toGridCoord(14, 3));
+game.putObject("Hector_0000", toGridCoord(15, 4));
 
 game.start();

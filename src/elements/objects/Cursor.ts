@@ -1,16 +1,14 @@
-import Board from "../overworld/Board";
 import Character from "./Character";
 import cursorData from "../../characters/cursor.json";
 
 class Cursor extends Character {
   snapOn?: Character;
-  constructor(config: { x: number; y: number; board: Board }) {
-    const { x, y, board } = config;
+  constructor(config: { x: number; y: number }) {
+    const { x, y } = config;
     super({
       name: "cursor",
       x: x,
       y: y,
-      board: board,
       spriteData: cursorData,
       anchorOverwrite: { x: 0.5 },
       currentAnimation: "normal",

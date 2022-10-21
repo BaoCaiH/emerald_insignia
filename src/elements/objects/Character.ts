@@ -9,9 +9,9 @@ class Character extends GameObject {
   protected moveSpeed: number;
   constructor(config: {
     name?: string;
-    x: number;
-    y: number;
-    board: Board;
+    x?: number;
+    y?: number;
+    board?: Board;
     spriteData: ISpritesheetData;
     anchorOverwrite?: Record<string, number> | undefined;
     currentAnimation?: string | undefined;
@@ -42,16 +42,6 @@ class Character extends GameObject {
     if (this.focus) {
       this.changeAnimation("focus");
     }
-    // if (this.tweenRemaining === 0) {
-    //   if (state?.arrow && this.focus) {
-    //     this.startTweening(state.arrow);
-    //   } else {
-    //     this.changeDirection("idle");
-    //     if (this.focus) {
-    //       this.changeAnimation("focus");
-    //     }
-    //   }
-    // }
   }
 
   protected startTweening(arrow: string) {
@@ -63,7 +53,7 @@ class Character extends GameObject {
 
   protected setDestination() {
     this.tweenRemaining = 16;
-    this.board.moveObstacle(this.x, this.y, this.direction);
+    this.board?.moveObstacle(this.x, this.y, this.direction);
   }
 
   protected changeDirection(arrow: string) {
@@ -88,7 +78,7 @@ class Character extends GameObject {
 
   protected attemptMoveSuccess() {
     const { x, y } = nextPosition(this.x, this.y, this.direction);
-    return !this.board.isOccupied(x, y);
+    return !this.board?.isOccupied(x, y);
   }
 }
 
