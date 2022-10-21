@@ -3,29 +3,25 @@ import Board from "../overworld/Board";
 import ObjectSprite from "./ObjectSprite";
 
 class GameObject {
-  internalName: string;
+  name: string;
   protected internalDirection: string;
   protected allowedDirections: string[];
   protected internalSprite: ObjectSprite;
   protected internalIsFocus: boolean;
-  protected internalBoard: Board;
+  protected internalBoard?: Board;
   constructor(config: {
     name?: string;
-    x: number;
-    y: number;
-    board: Board;
+    board?: Board;
     spriteData: ISpritesheetData;
     anchorOverwrite?: Record<string, number>;
     initialAnimation?: string;
     animationSpeed?: number;
   }) {
-    this.internalName = config.name || "unknown";
+    this.name = config.name || "unknown";
     this.internalDirection = config.initialAnimation || "idle";
     this.allowedDirections = ["idle", "focus", "left", "right", "up", "down"];
     this.internalIsFocus = false;
     this.internalSprite = new ObjectSprite(config);
-    this.internalBoard = config.board;
-    this.board.addObstacle(this.x, this.y);
   }
 
   get animation() {
@@ -34,6 +30,18 @@ class GameObject {
 
   get board() {
     return this.internalBoard;
+  }
+
+  addToBoard(board: Board, position?: { x: number; y: number }) {
+    this.internalBoard = board;
+    if (position) {
+      this.position = position;
+    }
+    this.board?.addObstacle(this.x, this.y);
+  }
+
+  removeFromBoard() {
+    this.internalBoard = undefined;
   }
 
   update(state?: {}) {
@@ -77,7 +85,11 @@ class GameObject {
   }
 
   get position() {
-    return { x: this.x, y: this.y };
+    return this.internalSprite.position;
+  }
+
+  set position(destination: { x: number; y: number }) {
+    this.internalSprite.position = destination;
   }
 
   get direction() {
