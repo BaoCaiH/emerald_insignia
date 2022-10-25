@@ -16,8 +16,6 @@ class ObjectSprite {
     currentAnimation?: string;
     spriteData: ISpritesheetData;
     animationSpeed?: number;
-    x: number;
-    y: number;
   }) {
     // Init
     this.spriteData = config.spriteData;
@@ -37,7 +35,6 @@ class ObjectSprite {
       config.anchorOverwrite?.x,
       config.anchorOverwrite?.y
     );
-    this.position = [config.x, config.y];
     this.internalAnimation.animationSpeed = config.animationSpeed || 1;
     this.internalAnimation.play();
   }
@@ -63,12 +60,12 @@ class ObjectSprite {
   }
 
   get position() {
-    return [this.x, this.y];
+    return { x: this.x, y: this.y };
   }
 
-  set position([xDest, yDest]) {
-    this.x = xDest;
-    this.y = yDest;
+  set position(destination: { x: number; y: number }) {
+    this.x = destination.x;
+    this.y = destination.y;
   }
 
   changeAnimation(animation: string) {

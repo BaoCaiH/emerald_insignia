@@ -20,10 +20,8 @@ class ABInput extends Input {
           this.cursor.releaseCharacter();
           return;
         }
-        const objectAtCursor = this.board.getObjectAt(
-          this.cursor.x,
-          this.cursor.y
-        );
+        const objectAtCursor = this.game.objectAt(this.cursor.x, this.cursor.y);
+
         if (objectAtCursor) {
           this.cursor.selectCharacter(objectAtCursor);
         }
@@ -38,11 +36,11 @@ class ABInput extends Input {
   }
 
   get cursor() {
-    return this.board.cursor;
+    return this.game.cursor;
   }
 
   get characters() {
-    return this.board.players.characters;
+    return this.game.characters;
   }
 }
 
