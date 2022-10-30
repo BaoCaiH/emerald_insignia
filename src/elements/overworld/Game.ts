@@ -56,6 +56,7 @@ class Game {
 
   addBoard(boardConfig: {
     name: string;
+    spriteData: ISpritesheetData;
     xOffset?: number;
     yOffset?: number;
     characters?: Character[];
@@ -67,6 +68,7 @@ class Game {
   loadBoards(
     boardConfigs: {
       name: string;
+      spriteData: ISpritesheetData;
       xOffset?: number;
       yOffset?: number;
       characters?: Character[];
