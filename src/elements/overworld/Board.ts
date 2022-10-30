@@ -1,60 +1,45 @@
-import { Sprite } from "pixi.js";
+import { ISpritesheetData } from "pixi.js";
 import {
   zipCoordToString,
   nextPosition,
   toGridCoordString,
 } from "../../utils/coordinates";
+import GameObject from "../objects/GameObject";
 
-class Board {
+class Board extends GameObject {
   protected internalName: string;
-  protected map: Sprite;
+  // protected map: Sprite;
   protected collisions: { [x: string]: boolean };
   startPoint: { x: number; y: number };
   constructor(config: {
     name: string;
+    spriteData: ISpritesheetData;
     xOffset?: number;
     yOffset?: number;
     startPoint?: { x: number; y: number };
   }) {
-    const { name, xOffset, yOffset, startPoint } = config;
+    const { name, spriteData, xOffset, yOffset, startPoint } = config;
+    super({
+      name: name,
+      spriteData: spriteData,
+    });
     this.internalName = name;
-    this.map = Sprite.from(`img/Map/${this.internalName}.png`);
-    this.map.anchor.set(0);
-    this.map.x = xOffset || 0;
-    this.map.y = yOffset || 0;
+    this.x = xOffset || 0;
+    this.y = yOffset || 0;
     this.collisions = {};
     this.loadObstacles();
     this.startPoint = startPoint || { x: 0, y: 0 };
   }
 
-  get name() {
-    return this.internalName;
-  }
-
-  get x() {
-    return this.map.x;
-  }
-  get y() {
-    return this.map.y;
-  }
-
-  set x(coordinate: number) {
-    this.map.x = coordinate;
-  }
-  set y(coordinate: number) {
-    this.map.y = coordinate;
-  }
-
   get sprite() {
-    return this.map;
+    return this.internalSprite;
   }
 
   async loadObstacles() {
-    const data = (await import(`../maps/${this.name}.json`)) as Record<
-      string,
-      [number, number][]
-    >;
-    data["floor"].forEach(([x, y]) => {
+    const data = (await import(
+      `../../maps/${this.name}/collisions.json`
+    )) as Record<string, [number, number][]>;
+    data["ground"].forEach(([x, y]) => {
       this.addObstacle(x, y, true);
     });
   }
