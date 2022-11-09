@@ -47,7 +47,7 @@ class Character extends AnimatedGameObject {
     this.remainingTraversalDistance = this.speed;
   }
 
-  override update(state?: { arrow: string }) {
+  override update(state?: { arrow: string; mode?: string }) {
     if (this.tweenRemaining !== 0) {
       this.tweening();
       return;
@@ -55,15 +55,15 @@ class Character extends AnimatedGameObject {
     if (state?.arrow && this.focus) {
       // console.log(this.remainingSpeed);
 
-      this.startTweening(state.arrow);
+      this.startTweening(state.arrow, state.mode);
       return;
     }
     this.changeDirection("idle");
   }
 
-  protected startTweening(arrow: string) {
+  protected startTweening(arrow: string, mode?: string) {
     this.changeDirection(arrow);
-    if (this.attemptMoveSuccess()) {
+    if (this.attemptMoveSuccess(mode)) {
       this.setDestination();
     }
   }
@@ -94,9 +94,12 @@ class Character extends AnimatedGameObject {
     }
   }
 
-  protected attemptMoveSuccess() {
+  protected attemptMoveSuccess(mode?: string) {
     const { x, y } = nextPosition(this.x, this.y, this.direction);
-    return !this.board?.isOccupied(x, y) && this.remainingSpeed > 0;
+    return (
+      !this.board?.isOccupied(x, y) &&
+      (this.remainingSpeed > 0 || mode === "roam")
+    );
   }
 }
 
