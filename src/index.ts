@@ -1,5 +1,6 @@
 import { settings, SCALE_MODES } from "pixi.js";
 import Game from "./elements/overworld/Game";
+import dataMap from "./maps/plain_00/sprite.json";
 import dataLyn from "./characters/Lyn/onMap.json";
 import dataHector from "./characters/Hector/onMap.json";
 import { toGridCoord } from "./utils/coordinates";
@@ -18,6 +19,7 @@ const game = new Game({
 
 const boardConfig = {
   name: "plain_00",
+  spriteData: dataMap,
   xOffset: 8,
   yOffset: 8,
   startPoint: toGridCoord(15, 3),
@@ -29,6 +31,7 @@ const characterConfigs = [
     anchorOverwrite: { x: 0.5 },
     animationSpeed: 0.07,
     moveSpeed: 2,
+    initialAnimation: "idle",
   },
   {
     name: "Hector",
@@ -36,6 +39,7 @@ const characterConfigs = [
     anchorOverwrite: { x: 0.5 },
     animationSpeed: 0.07,
     moveSpeed: 2,
+    initialAnimation: "idle",
   },
 ];
 game.addBoard(boardConfig);

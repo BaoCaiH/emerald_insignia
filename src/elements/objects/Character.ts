@@ -1,9 +1,9 @@
 import { ISpritesheetData } from "pixi.js";
 import Board from "../overworld/Board";
-import GameObject from "./GameObject";
 import { nextPosition } from "../../utils/coordinates";
+import AnimatedGameObject from "./AnimatedGameObject";
 
-class Character extends GameObject {
+class Character extends AnimatedGameObject {
   protected tweenRemaining: number;
   tweeningInstruction: Record<string, [string, number]>;
   protected moveSpeed: number;
@@ -39,9 +39,6 @@ class Character extends GameObject {
       return;
     }
     this.changeDirection("idle");
-    if (this.focus) {
-      this.changeAnimation("focus");
-    }
   }
 
   protected startTweening(arrow: string) {

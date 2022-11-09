@@ -1,74 +1,52 @@
-import { ISpritesheetData } from "pixi.js";
-import Board from "../overworld/Board";
-import ObjectSprite from "./ObjectSprite";
+import {
+  ISpritesheetData,
+  Sprite,
+  Spritesheet,
+  BaseTexture,
+  Texture,
+  Resource,
+} from "pixi.js";
 
 class GameObject {
   name: string;
-  protected internalDirection: string;
-  protected allowedDirections: string[];
-  protected internalSprite: ObjectSprite;
-  protected internalIsFocus: boolean;
-  protected internalBoard?: Board;
+  protected internalSprite: Sprite;
+  protected textures: Record<string, Texture<Resource>[]>;
   constructor(config: {
     name?: string;
-    board?: Board;
     spriteData: ISpritesheetData;
     anchorOverwrite?: Record<string, number>;
-    initialAnimation?: string;
-    animationSpeed?: number;
+    initialSprite?: string;
   }) {
-    this.name = config.name || "unknown";
-    this.internalDirection = config.initialAnimation || "idle";
-    this.allowedDirections = ["idle", "focus", "left", "right", "up", "down"];
-    this.internalIsFocus = false;
-    this.internalSprite = new ObjectSprite(config);
+    const { name, anchorOverwrite } = config;
+    this.name = name || "unknown";
+    const spritesheet = this.loadSpritesheet(config);
+    spritesheet.parse();
+    this.textures = spritesheet.animations;
+    this.internalSprite = this.setupSprite(config);
+    this.internalSprite.anchor.set(anchorOverwrite?.x, anchorOverwrite?.y);
   }
 
-  get animation() {
-    return this.internalSprite.animation;
+  // Setups
+  loadSpritesheet(config: {
+    spriteData: any; // ISpritesheetData but Interface missing image
+  }) {
+    return new Spritesheet(
+      BaseTexture.from(config.spriteData.meta.image),
+      config.spriteData
+    );
   }
 
-  get board() {
-    return this.internalBoard;
-  }
-
-  addToBoard(board: Board, position?: { x: number; y: number }) {
-    this.internalBoard = board;
-    if (position) {
-      this.position = position;
+  setupSprite(config: { initialSprite?: string }) {
+    if (config.initialSprite) {
+      return new Sprite(this.textures[config.initialSprite][0]);
+    } else {
+      return new Sprite(Object.values(this.textures)[0][0]);
     }
-    this.board?.addObstacle(this.x, this.y);
-  }
-
-  removeFromBoard() {
-    this.internalBoard = undefined;
   }
 
   update(state?: {}) {
     if (state) {
     }
-  }
-
-  playAnimation() {
-    this.animation.play();
-  }
-  stopAnimation() {
-    this.animation.gotoAndStop(0);
-  }
-  restartAnimation() {
-    this.animation.gotoAndPlay(0);
-  }
-
-  changeAnimation(animation: string) {
-    this.internalSprite.changeAnimation(animation);
-  }
-
-  get focus() {
-    return this.internalIsFocus;
-  }
-
-  set focus(flag: boolean) {
-    this.internalIsFocus = flag;
   }
 
   get x() {
@@ -90,16 +68,6 @@ class GameObject {
 
   set position(destination: { x: number; y: number }) {
     this.internalSprite.position = destination;
-  }
-
-  get direction() {
-    return this.internalDirection;
-  }
-
-  protected set direction(direction: string) {
-    if (this.allowedDirections.includes(direction)) {
-      this.internalDirection = direction;
-    }
   }
 }
 
