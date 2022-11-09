@@ -31,6 +31,7 @@ const characterConfigs = [
     anchorOverwrite: { x: 0.5 },
     animationSpeed: 0.07,
     moveSpeed: 2,
+    initialAnimation: "idle",
   },
   {
     name: "Hector",
@@ -38,6 +39,7 @@ const characterConfigs = [
     anchorOverwrite: { x: 0.5 },
     animationSpeed: 0.07,
     moveSpeed: 2,
+    initialAnimation: "idle",
   },
 ];
 game.addBoard(boardConfig);

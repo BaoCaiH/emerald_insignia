@@ -39,9 +39,6 @@ class Character extends AnimatedGameObject {
       return;
     }
     this.changeDirection("idle");
-    if (this.focus) {
-      this.changeAnimation("focus");
-    }
   }
 
   protected startTweening(arrow: string) {

@@ -28,27 +28,6 @@
       "spriteSourceSize": { "x": 0, "y": 0, "w": 24, "h": 20 },
       "sourceSize": { "w": 24, "h": 20 }
     },
-    "lyn_focus_00.png": {
-      "frame": { "x": 168, "y": 16, "w": 16, "h": 20 },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 20 },
-      "sourceSize": { "w": 16, "h": 20 }
-    },
-    "lyn_focus_01.png": {
-      "frame": { "x": 184, "y": 16, "w": 16, "h": 20 },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 20 },
-      "sourceSize": { "w": 16, "h": 20 }
-    },
-    "lyn_focus_02.png": {
-      "frame": { "x": 200, "y": 16, "w": 16, "h": 20 },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 20 },
-      "sourceSize": { "w": 16, "h": 20 }
-    },
     "lyn_idle_00.png": {
       "frame": { "x": 0, "y": 0, "w": 16, "h": 16 },
       "rotated": false,
@@ -162,7 +141,6 @@
       "lyn_down_02.png",
       "lyn_down_03.png"
     ],
-    "focus": ["lyn_focus_00.png", "lyn_focus_01.png", "lyn_focus_02.png"],
     "idle": ["lyn_idle_00.png", "lyn_idle_01.png", "lyn_idle_02.png"],
     "left": [
       "lyn_left_00.png",

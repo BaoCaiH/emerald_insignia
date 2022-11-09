@@ -160,16 +160,14 @@ class Game {
    * Update board (canvas), cursor, and camera
    */
   start() {
+    let previousState = Object.values(this.characters)
+      .map(
+        (character) =>
+          `${character.name}${character.direction}${character.focus}`
+      )
+      .reduce((prev, curr) => `${prev}_${curr}`, "");
     this.application.ticker.add(() => {
       const inputDirection = this.inputs.directional.direction;
-
-      // Get current state to compare later
-      const currentState = Object.values(this.characters)
-        .map(
-          (character) =>
-            `${character.name}${character.direction}${character.focus}`
-        )
-        .reduce((prev, curr) => `${prev}_${curr}`, "");
 
       // Update character loop
       Object.values(this.characters).forEach((character) => {
@@ -177,18 +175,20 @@ class Game {
       });
 
       // Check new state
-      const newState = Object.values(this.characters)
+      const currentState = Object.values(this.characters)
         .map(
           (character) =>
             `${character.name}${character.direction}${character.focus}`
         )
         .reduce((prev, curr) => `${prev}_${curr}`, "");
+
       //  if any changed, synchronise animations
-      if (newState !== currentState) {
+      if (currentState !== previousState) {
         Object.values(this.characters).forEach((character) => {
           character.restartAnimation();
         });
       }
+      previousState = currentState;
       this.cursor.update({ arrow: inputDirection });
       this.pivot.copyFrom(this.cursor.position);
     });

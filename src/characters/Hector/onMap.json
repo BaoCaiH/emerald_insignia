@@ -28,27 +28,6 @@
       "spriteSourceSize": { "x": 0, "y": 0, "w": 28, "h": 18 },
       "sourceSize": { "w": 28, "h": 18 }
     },
-    "hector_focus_00.png": {
-      "frame": { "x": 0, "y": 18, "w": 24, "h": 22 },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": { "x": 0, "y": 0, "w": 24, "h": 22 },
-      "sourceSize": { "w": 24, "h": 22 }
-    },
-    "hector_focus_01.png": {
-      "frame": { "x": 24, "y": 18, "w": 18, "h": 38 },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": { "x": 0, "y": 0, "w": 18, "h": 38 },
-      "sourceSize": { "w": 18, "h": 38 }
-    },
-    "hector_focus_02.png": {
-      "frame": { "x": 42, "y": 18, "w": 18, "h": 38 },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": { "x": 0, "y": 0, "w": 18, "h": 38 },
-      "sourceSize": { "w": 18, "h": 38 }
-    },
     "hector_idle_00.png": {
       "frame": { "x": 60, "y": 18, "w": 16, "h": 16 },
       "rotated": false,
@@ -161,11 +140,6 @@
       "hector_down_01.png",
       "hector_down_02.png",
       "hector_down_03.png"
-    ],
-    "focus": [
-      "hector_focus_00.png",
-      "hector_focus_01.png",
-      "hector_focus_02.png"
     ],
     "idle": ["hector_idle_00.png", "hector_idle_01.png", "hector_idle_02.png"],
     "left": [
