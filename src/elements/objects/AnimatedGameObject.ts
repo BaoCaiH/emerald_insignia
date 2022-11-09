@@ -29,7 +29,7 @@ class AnimatedGameObject extends GameObject {
       anchorOverwrite: anchorOverwrite,
       initialSprite: initialAnimation,
     });
-    this.allowedDirections = ["idle", "focus", "left", "right", "up", "down"];
+    this.allowedDirections = ["idle", "left", "right", "up", "down"];
     this.internalDirection = initialAnimation || this.allowedDirections[0];
     this.internalIsFocus = false;
     // Setup Sprite
@@ -53,8 +53,9 @@ class AnimatedGameObject extends GameObject {
   }
 
   // Update
-  override update(state?: {}) {
-    if (state) {
+  override update(_state?: {}) {
+    if (!this.animation.playing) {
+      this.animation.play();
     }
   }
 
