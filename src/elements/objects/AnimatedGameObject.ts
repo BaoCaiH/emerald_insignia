@@ -7,7 +7,6 @@ class AnimatedGameObject extends GameObject {
   protected allowedDirections: string[];
   protected internalAnimation: AnimatedSprite;
   protected internalIsFocus: boolean;
-  protected internalBoard?: Board;
   constructor(config: {
     name?: string;
     board?: Board;
@@ -64,10 +63,6 @@ class AnimatedGameObject extends GameObject {
     return this.internalAnimation;
   }
 
-  get board() {
-    return this.internalBoard;
-  }
-
   get focus() {
     return this.internalIsFocus;
   }
@@ -80,18 +75,6 @@ class AnimatedGameObject extends GameObject {
 
   set focus(flag: boolean) {
     this.internalIsFocus = flag;
-  }
-
-  addToBoard(board: Board, position?: { x: number; y: number }) {
-    this.internalBoard = board;
-    if (position) {
-      this.position = position;
-    }
-    this.board?.addObstacle(this.x, this.y);
-  }
-
-  removeFromBoard() {
-    this.internalBoard = undefined;
   }
 
   playAnimation() {

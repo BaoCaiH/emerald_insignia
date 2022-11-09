@@ -4,6 +4,7 @@ import Board from "./Board";
 import Character from "../objects/Character";
 import ABInput from "../../inputs/ABInput";
 import Cursor from "../objects/Cursor";
+import ModeInput from "../../inputs/ModeInput";
 
 class Game {
   gameContainer: HTMLElement;
@@ -11,6 +12,7 @@ class Game {
   inputs: {
     directional: DirectionInput;
     abControl: ABInput;
+    modeInput: ModeInput;
   };
   boards: Record<string, Board>;
   characters: Record<string, Character>;
@@ -51,6 +53,7 @@ class Game {
     return {
       directional: new DirectionInput(),
       abControl: new ABInput(this),
+      modeInput: new ModeInput(),
     };
   }
 
@@ -168,10 +171,11 @@ class Game {
       .reduce((prev, curr) => `${prev}_${curr}`, "");
     this.application.ticker.add(() => {
       const inputDirection = this.inputs.directional.direction;
+      const mode = this.inputs.modeInput.mode;
 
       // Update character loop
       Object.values(this.characters).forEach((character) => {
-        character.update({ arrow: inputDirection });
+        character.update({ arrow: inputDirection, mode: mode });
       });
 
       // Check new state
