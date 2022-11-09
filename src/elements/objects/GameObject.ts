@@ -6,11 +6,13 @@ import {
   Texture,
   Resource,
 } from "pixi.js";
+import Board from "../overworld/Board";
 
 class GameObject {
   name: string;
   protected internalSprite: Sprite;
   protected textures: Record<string, Texture<Resource>[]>;
+  protected internalBoard?: Board;
   constructor(config: {
     name?: string;
     spriteData: ISpritesheetData;
@@ -49,6 +51,18 @@ class GameObject {
     }
   }
 
+  addToBoard(board: Board, position?: { x: number; y: number }) {
+    this.internalBoard = board;
+    if (position) {
+      this.position = position;
+    }
+    this.board?.addObstacle(this.x, this.y);
+  }
+
+  removeFromBoard() {
+    this.internalBoard = undefined;
+  }
+
   get x() {
     return this.internalSprite.x;
   }
@@ -60,6 +74,10 @@ class GameObject {
   }
   set y(yDest: number) {
     this.internalSprite.y = yDest;
+  }
+
+  get board() {
+    return this.internalBoard;
   }
 
   get position() {
