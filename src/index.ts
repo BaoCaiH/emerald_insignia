@@ -30,7 +30,7 @@ const characterConfigs = [
     spriteData: dataLyn,
     anchorOverwrite: { x: 0.5 },
     animationSpeed: 0.07,
-    moveSpeed: 2,
+    tweeningSpeed: 2,
     initialAnimation: "idle",
   },
   {
@@ -38,7 +38,7 @@ const characterConfigs = [
     spriteData: dataHector,
     anchorOverwrite: { x: 0.5 },
     animationSpeed: 0.07,
-    moveSpeed: 2,
+    tweeningSpeed: 2,
     initialAnimation: "idle",
   },
 ];

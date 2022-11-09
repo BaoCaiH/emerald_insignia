@@ -13,7 +13,7 @@ class Cursor extends Character {
       anchorOverwrite: { x: 0.5 },
       currentAnimation: "normal",
       animationSpeed: 0.05,
-      moveSpeed: 2,
+      tweeningSpeed: 2,
     });
     this.focus = true;
     this.animation.play();
@@ -31,6 +31,7 @@ class Cursor extends Character {
   selectCharacter(character: Character) {
     this.snapOn = character;
     this.snapOn.focus = true;
+    this.snapOn.replenishSpeed();
     this.stopAnimation();
   }
 
