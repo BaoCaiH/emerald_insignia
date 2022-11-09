@@ -6,7 +6,9 @@ import AnimatedGameObject from "./AnimatedGameObject";
 class Character extends AnimatedGameObject {
   protected tweenRemaining: number;
   tweeningInstruction: Record<string, [string, number]>;
-  protected moveSpeed: number;
+  protected traversalSpeed: number;
+  protected remainingTraversalDistance: number;
+  protected tweeningSpeed: number;
   constructor(config: {
     name?: string;
     x?: number;
@@ -16,10 +18,13 @@ class Character extends AnimatedGameObject {
     anchorOverwrite?: Record<string, number> | undefined;
     currentAnimation?: string | undefined;
     animationSpeed?: number | undefined;
-    moveSpeed?: number | undefined;
+    tweeningSpeed?: number | undefined;
+    traversalSpeed?: number | undefined;
   }) {
     super(config);
-    this.moveSpeed = config.moveSpeed || 1;
+    this.tweeningSpeed = config.tweeningSpeed || 1;
+    this.traversalSpeed = config.traversalSpeed || 30;
+    this.remainingTraversalDistance = this.traversalSpeed;
     this.tweenRemaining = 0;
     this.tweeningInstruction = {
       left: ["x", -1],
@@ -29,12 +34,27 @@ class Character extends AnimatedGameObject {
     };
   }
 
+  // getters
+  get speed() {
+    return this.traversalSpeed;
+  }
+
+  get remainingSpeed() {
+    return this.remainingTraversalDistance;
+  }
+
+  replenishSpeed() {
+    this.remainingTraversalDistance = this.speed;
+  }
+
   override update(state?: { arrow: string }) {
     if (this.tweenRemaining !== 0) {
       this.tweening();
       return;
     }
     if (state?.arrow && this.focus) {
+      // console.log(this.remainingSpeed);
+
       this.startTweening(state.arrow);
       return;
     }
@@ -50,6 +70,7 @@ class Character extends AnimatedGameObject {
 
   protected setDestination() {
     this.tweenRemaining = 16;
+    this.remainingTraversalDistance -= 5;
     this.board?.moveObstacle(this.x, this.y, this.direction);
   }
 
@@ -63,7 +84,7 @@ class Character extends AnimatedGameObject {
   protected tweening() {
     if (this.tweenRemaining > 0 && this.direction !== "idle") {
       const [axis, instruction] = this.tweeningInstruction[this.direction];
-      const movement = Math.min(this.moveSpeed, this.tweenRemaining);
+      const movement = Math.min(this.tweeningSpeed, this.tweenRemaining);
       if (axis === "x") {
         this.internalSprite.x += instruction * movement;
       } else if (axis === "y") {
@@ -75,7 +96,7 @@ class Character extends AnimatedGameObject {
 
   protected attemptMoveSuccess() {
     const { x, y } = nextPosition(this.x, this.y, this.direction);
-    return !this.board?.isOccupied(x, y);
+    return !this.board?.isOccupied(x, y) && this.remainingSpeed > 0;
   }
 }
 
