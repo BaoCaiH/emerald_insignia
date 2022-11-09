@@ -8,7 +8,6 @@ import GameObject from "../objects/GameObject";
 
 class Board extends GameObject {
   protected internalName: string;
-  // protected map: Sprite;
   protected collisions: { [x: string]: boolean };
   startPoint: { x: number; y: number };
   constructor(config: {
